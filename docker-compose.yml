@@ -2,13 +2,14 @@ version: '3.8'
 
 services:
   django:
+    container_name: onlinecourse
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      -"8000:8000"
+      - "8000:8000"
     volumes:
-      -".:onlinecourse"
+      - ".:onlinecourse"
     depends_on:
       - db
   db:

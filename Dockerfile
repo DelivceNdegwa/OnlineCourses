@@ -1,5 +1,5 @@
 # Base image with Python and PostgreSQL client
-FROM python:3.9-slim-buster as base
+FROM python:3.10 as base
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -16,6 +16,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
+RUN mkdir /onlinecourse
 WORKDIR /onlinecourse
 
 COPY requirements.txt .
@@ -24,10 +25,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-FROM base AS development
-ENV DJANGO_SETTINGS_MODULE=online_courses.settings.development
-CMD python manage.py runserver 0.0.0.0:80000
-
-FROM base AS production
-ENV DJANGO_SETTINGS_MODULE=online_courses.settings.production
-CMD python manage.py runserver 0.0.0.0:8000
+CMD ["./entrypoint.sh"]
