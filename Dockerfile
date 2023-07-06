@@ -1,5 +1,5 @@
 # Base image with Python and PostgreSQL client
-FROM python:3.10 as base
+FROM python:3.11 as base
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -25,4 +25,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["./entrypoint.sh"]
+RUN chmod +x ./entrypoint.sh
+
+RUN ./entrypoint.sh

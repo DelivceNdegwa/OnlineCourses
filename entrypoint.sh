@@ -8,5 +8,5 @@ python manage.py shell -c "
 
     User.objects.create_superuser('courseadmin', 'admin@gmail.com', 'courseadmin2023')
 "
-
+python manage.py runserver 0.0.0.0:8000
 exec ${cmd}
