@@ -8,18 +8,33 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    environment:
+      POSTGRES_HOST: db
     volumes:
-      - .:/onlinecourse
+      - .env.example:/onlinecourse/.env
+      # - .:/onlinecourse
     depends_on:
       - db
+    links:
+      - db
+    networks:
+      - courseNetwork
   db:
     image: postgres:latest
     restart: always
+    hostname: db
     environment:
       - POSTGRES_USER=course_admin
       - POSTGRES_PASSWORD=adminpassword2023
       - POSTGRES_DB=course_db
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - courseNetwork
 volumes:
   postgres_data:
+
+networks:
+  courseNetwork:
