@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'online_courses.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.dbsqlite3',
+        'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': config.get('POSTGRES_DB'),
         # 'USER': config.get('POSTGRES_USER'),
         # 'PASSWORD': config.get('POSTGRES_PASSWORD'),
