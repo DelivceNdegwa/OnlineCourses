@@ -12,10 +12,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
-from dotenv import dotenv_values
+from dotenv import load_dotenv
 
+load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
-config = dotenv_values('.env')
+config = os.environ
+
 
 SECRET_KEY = config.get("DJANGO_SECRET_KEY")
 
