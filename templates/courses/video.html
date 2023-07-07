@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Streaming</title>
+    <!-- Default theme. ~960B -->
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@vime/core@^5/themes/default.css"
+    />
+
+    <!-- Optional light theme (extends default). ~400B -->
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@vime/core@^5/themes/light.css"
+    />
+
+    <!-- Library and all of its components are lazy loaded, so nothing to sweat about here. ~3kB -->
+    <script
+    type="module"
+    src="https://cdn.jsdelivr.net/npm/@vime/core@^5/dist/vime/vime.esm.js"
+    ></script>
+</head>
+<body>
+    <h1>{{ video.title }}</h1>
+    {% comment %}
+        <video id="video_{{ video.id }}" controls>
+            <source src="{{ hls_manifest_url }}" type="application/vnd.apple.mpegurl">
+            Your browser does not support the video tag.
+        </video>
+    {% endcomment %}
+    {% if dash_manifest_url %}
+        <vm-player controls>
+            <vm-dash
+                version="latest" 
+                poster="https://images.unsplash.com/photo-1607434472257-d9f8e57a643d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=872&q=80"
+                id="{{ dash_manifest_url }}"
+                src="{{ dash_manifest_url }}"
+            >
+            </vm-dash>
+            <!-- ... -->
+        </vm-player>
+    {% else %}
+        <p>HLS files are being processed. Please try again later.</p>
+    {% endif %}
+    
+</body>
+</html>
