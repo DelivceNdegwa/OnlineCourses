@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <div class="row w-100">
+            <div class="col-lg-3 col-0">
+                <a class="navbar-brand d-none d-lg-block" href="#">Masomo</a>
+            </div>
+            <div class="col-lg-9 col-12">
+                <div class="d-lg-none d-block m-1">
+                    <div class="row">
+                        <div class="col-6 text-start p-0 m-0">
+                            <a class="navbar-brand" href="#">Masomo</a>
+                        </div>
+                        <div class="col-6 text-end p-0 m-0">
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <!-- <span class="navbar-toggler-icon"></span> -->
+                                <!-- animation="fade-left-hover" -->
+                                <box-icon 
+                                    name='menu-alt-right' 
+                                    size="lg"
+                                    color="var(--secondary-color)"
+                                ></box-icon>
+                            </button>
+                        </div>
+                    </div>
+                    {% include "components/nav_items_collapsed.html" %}
+                </div>
+                <div class="d-none d-lg-block">
+                    {% include "components/nav_items_large.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+  </nav>

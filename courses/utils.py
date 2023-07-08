@@ -23,7 +23,7 @@ class VideoProcessor:
     def process_dash(self):
         output_dir = self.get_output_directory(constants.DASH)
         
-        print(f"CHEKIIII::::{self.manifest_exists(output_dir, constants.DASH)}")
+
         if self.manifest_exists(output_dir, constants.DASH):
             return 
 
