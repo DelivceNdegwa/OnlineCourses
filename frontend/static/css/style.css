@@ -231,6 +231,9 @@ select{
     height: 50vh !important;
 }
 
+.courses-section h1{
+    font-weight: 600 !important;
+}
 
 @media (min-width:1115px) and (max-width:1200px){
     /* Buttons */
