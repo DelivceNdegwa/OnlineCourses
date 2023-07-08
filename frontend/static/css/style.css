@@ -16,9 +16,10 @@
     --title-weight:700;
     --smaller-title-weight:500;
 
-    --btn-border-radius: 100px;
+    --btn-border-radius: 10px;
     --card-border-radius: 10px;
-    --search-border-radius: 15px;
+    --search-border-radius: 10px;
+    --image-border-radius: 15px;
 }
 *{
     margin:0;
@@ -32,8 +33,12 @@ body{
     background-color: var(--primary-color) !important;
     color: var(--primary-variant) !important;
     min-height: 100vh;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
 }
-
+img{
+    object-fit: cover !important;
+}
 /* NAV BEGINNING */
 .navbar{
     margin-top: 2rem !important;
@@ -89,10 +94,19 @@ body{
     border: none !important;
 }
 
+.navbar-toggler.active {
+    border-color: transparent !important; /* Remove border */
+}
+
 /* NAV ENDING */
 
 /* Buttons */
-.btn-custom-secondary, .btn-custom-secondary-variant, .btn-custom-secondary-outlined{
+.btn-custom-secondary,
+.btn-custom-secondary-variant, 
+.btn-custom-secondary-outlined,
+.btn-custom-primary,
+.btn-custom-primary-variant
+{
     padding: 8px 16px;
     border-radius: var(--btn-border-radius) !important;
     text-decoration: none;
@@ -134,10 +148,21 @@ body{
     color: var(--primary-color) !important;
 }
 
+.btn-custom-primary-variant, .btn-custom-primary:hover{
+    color: var(--primary-color) !important;
+    background-color: var(--primary-variant) !important;
+    border: 2px solid var(--primary-color) !important;
+}
+
+.btn-custom-primary, .btn-custom-primary-variant:hover{
+    color: var(--primary-variant) !important;
+    background-color: var(--primary-color) !important;
+    border: 2px solid var(--primary-variant) !important;
+}
+
 .rounded-card{
     border-radius: var(--card-border-radius) !important; 
 }
-
 
 /* Select */
 select{
@@ -185,6 +210,28 @@ select{
     /* box-shadow: 0 0 5px var(--secondary-color-brighter) !important; */
 }
 
+
+.image-rounded{
+    border-radius: var(--image-border-radius) !important;
+}
+
+/* BANNER SECTION */
+.banner-section{
+    height: 62vh !important;
+}
+
+.banner-content h2{
+    font-weight: 900 !important;
+    font-size: 4.0rem !important;
+}
+
+.courses-section{
+    background-color: var(--primary-variant) !important;
+    color: var(--primary-color) !important;
+    height: 50vh !important;
+}
+
+
 @media (min-width:1115px) and (max-width:1200px){
     /* Buttons */
     .navbar .btn-custom-secondary,
@@ -228,3 +275,6 @@ select{
 
 }
 
+
+
+  
