@@ -4,7 +4,7 @@ from courses.models import Category
 def index(request):
     categories = Category.objects.all()[:5]
     context = {
-        
+        "categories": categories
     }
     
     return render(request, "frontend/index.html", context)

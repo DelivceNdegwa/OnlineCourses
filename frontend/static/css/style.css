@@ -40,6 +40,17 @@ body{
 img{
     object-fit: cover !important;
 }
+
+.bg-custom-primary{
+    background-color: var(--primary-color) !important;
+    color: var(--primary-variant) !important;
+}
+
+.bg-custom-secondary{
+    background-color: var(--secondary-color) !important;
+    color: var(--primary-color) !important;
+}
+
 /* NAV BEGINNING */
 .navbar{
     margin-top: 2rem !important;
@@ -185,6 +196,8 @@ select{
 }
 
 
+
+
 .search-box {
     position: relative;
     display: inline-block;
@@ -229,13 +242,20 @@ select{
 .courses-section{
     background-color: var(--primary-variant) !important;
     color: var(--primary-color) !important;
-    height: 50vh !important;
 }
 
 .courses-section h1{
     font-weight: 600 !important;
 }
 
+.courses-section-header{
+    max-height: 60px !important;
+    margin-bottom: 0 !important;
+}
+
+.courses-section-categories{
+    margin-top: 0px !important;
+}
 
 @media (min-width:1115px) and (max-width:1200px){
     /* Buttons */
