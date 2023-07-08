@@ -2,6 +2,22 @@ from django.db import models
 from . import constants
 from .utils import VideoProcessor
 
+
+class Category(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    image = models.ImageField(upload_to="categories/", null=True, blank=True)
+    short_description = models.CharField(max_length=150, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
+    
+    class Meta:
+        verbose_name_plural="Categories"
+        ordering = ['-created_at']
+        
+    
+    def __str__(self):
+        return self.name
+
 class Video(models.Model):
     title = models.CharField(max_length=100)
     video_file = models.FileField(upload_to='videos/')

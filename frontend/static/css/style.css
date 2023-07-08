@@ -34,6 +34,7 @@ body{
     color: var(--primary-variant) !important;
     min-height: 100vh;
     max-width: 100% !important;
+    min-width: 370px !important;
     overflow-x: hidden !important;
 }
 img{
@@ -235,6 +236,7 @@ select{
     font-weight: 600 !important;
 }
 
+
 @media (min-width:1115px) and (max-width:1200px){
     /* Buttons */
     .navbar .btn-custom-secondary,
@@ -278,6 +280,69 @@ select{
 
 }
 
+@media (max-width: 394px){
+    .banner-content h2{
+        font-size: 3.2rem !important;
+    }
+
+    .courses-section h1{
+        font-size: 1.15rem !important;
+    }
+}
+
+@media (min-width: 394px) and (max-width:539px){
+    .banner-content h2{
+        font-size: 3.6rem !important;
+    }
+}
+
+@media (min-width:394px) and (max-width: 407px){
+    .banner-content h2{
+        font-size: 3.4rem !important;
+    }
+}
 
 
-  
+@media (max-width:495px){
+    .courses-section h1{
+        font-weight: 400 !important;
+    }
+}
+
+@media (max-width:767px){
+    .banner-section{
+        height: 60vh !important;
+    }
+
+    .banner-content h2{
+        text-align: center;
+        height: inherit !important;
+    }
+}
+
+@media (min-width: 1115px) and (max-width: 1130px){
+    .navbar .btn-custom-secondary-outlined{
+        font-size: 0.8rem !important;
+    }
+    
+}
+
+@media (min-width:769px) and (max-width:992px){
+    .banner-content h2{
+        font-size: 3.8rem !important;
+    }
+
+    .banner-section{
+        height: 100vh !important;
+    }
+
+    .banner-image{
+        height: 300px !important;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px){
+    .banner-content h2{
+        font-size: 3rem !important;
+    }
+} 
