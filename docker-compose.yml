@@ -9,32 +9,32 @@ services:
     ports:
       - "8000:8000"
     environment:
-      POSTGRES_HOST: db
+      POSTGRES_HOST: ${POSTGRES_DB}
     volumes:
       - .env.example:/onlinecourse/.env
-      # - .:/onlinecourse
+      - .:/onlinecourse
     depends_on:
       - db
     links:
       - db
-    networks:
-      - courseNetwork
+    # networks:
+    #   - courseNetwork
   db:
     image: postgres:latest
     restart: always
     hostname: db
     environment:
-      - POSTGRES_USER=course_admin
-      - POSTGRES_PASSWORD=adminpassword2023
-      - POSTGRES_DB=course_db
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    networks:
-      - courseNetwork
+    # networks:
+    #   - courseNetwork
 volumes:
   postgres_data:
 
-networks:
-  courseNetwork:
+# networks:
+#   courseNetwork:

@@ -3,8 +3,8 @@
 
 :root{
     --primary-color: rgb(23, 23, 23);
-    --secondary-color: #5ada10;
-    --secondary-color-brighter:#6afe14;
+    --secondary-color: #3da700;/*#44b901;#5ada10*/
+    --secondary-color-brighter:#4dd100;
     --primary-variant: #EBEBEB;
     --secondary-variant: rgb(0, 20, 44);
     --secondary-variant-brighter: rgb(11, 35, 65);
@@ -156,7 +156,7 @@ img{
 }
 
 .btn-custom-secondary-outlined:hover{
-    background-color: var(--secondary-color) !important;
+    background-color: var(--secondary-color-brighter) !important;
     color: var(--primary-color) !important;
 }
 
@@ -195,7 +195,9 @@ select{
     color: var(--secondary-color) !important;
 }
 
-
+.text-custom-secondary-brighter{
+    color: var(--secondary-color-brighter) !important;
+}
 
 
 .search-box {
@@ -236,7 +238,7 @@ select{
 
 .banner-content h2{
     font-weight: 900 !important;
-    font-size: 4.0rem !important;
+    font-size: 5.5rem !important;
 }
 
 .courses-section{

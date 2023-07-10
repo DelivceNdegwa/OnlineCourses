@@ -24,7 +24,7 @@ SECRET_KEY = config.get("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -88,7 +88,7 @@ DATABASES = {
         # 'NAME': config.get('POSTGRES_DB'),
         # 'USER': config.get('POSTGRES_USER'),
         # 'PASSWORD': config.get('POSTGRES_PASSWORD'),
-        # 'HOST': "192.168.100.232",
+        # 'HOST':  'db',#config.get('POSTGRES_HOST'),#"192.168.100.232",
         # 'PORT': '5432'
     }
 }
