@@ -12,11 +12,17 @@
         <li class="nav-item">
             {% include "components/search_form.html" %}
         </li>
+        {% if request.user.is_authenticated %}
         <li class="nav-item">
-            <a href="{% url 'users:sign-up' %}" class="btn btn-custom-secondary-outlined d-inline-block w-25">Register</a>
+            <a href="{% url 'users:logout' %}" class="btn btn-custom-secondary-outlined d-inline-block w-25">Logout</a>
         </li>
-        <li class="nav-item">
-            <a href="#" class="btn btn-custom-secondary d-inline-block w-25">Login</a>
-        </li>
+        {% else %}
+            <li class="nav-item">
+                <a href="{% url 'users:sign-up' %}" class="btn btn-custom-secondary-outlined d-inline-block w-25">Register</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'users:login' %}" class="btn btn-custom-secondary d-inline-block w-25">Login</a>
+            </li>
+        {% endif %}
     </ul>
 </div>

@@ -226,6 +226,10 @@ select{
     /* box-shadow: 0 0 5px var(--secondary-color-brighter) !important; */
 }
 
+input:focus{
+    outline: none !important;
+}
+
 
 .image-rounded{
     border-radius: var(--image-border-radius) !important;
