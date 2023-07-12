@@ -1,10 +1,27 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from . import constants
 from .utils import VideoProcessor
 
 
 User = get_user_model()
+
+
+class SystemSettings(models.Model):
+    one_time_fee = models.DecimalField(decimal_places=1, max_digits=10)
+    monthly_fee = models.DecimalField(decimal_places=1, max_digits=10)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    class Meta:
+        verbose_name_plural = 'SystemSettings'
+        
+    def save(self, *args, **kwargs):
+            if not self.pk and SystemSettings.objects.exists():
+                raise ValidationError('There is can be only one SystemSetting instance')
+            return super(SystemSettings, self).save(*args, **kwargs)
+
+
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     image = models.ImageField(upload_to="categories/", null=True, blank=True)
@@ -21,9 +38,26 @@ class Category(models.Model):
         return self.name
 
 
+class Profile(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    phone_number = models.IntegerField()
+    profile_image = models.ImageField(upload_to='user_profile')
+    
+    def __str__(self):
+        return self.user.username
+
+
+class Instructor(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    description = models.TextField()
+    
+    def __str__(self):
+        return self.profile
+
+
 class Course(models.Model):
     title = models.CharField(max_length=100)
-    instructor = models.ForeignKey(User, on_delete=models.CASCADE)
+    instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     description = models.TextField()
 

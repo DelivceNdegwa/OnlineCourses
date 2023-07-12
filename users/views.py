@@ -70,7 +70,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 authentication_error = False
-                return redirect("frontend:home")
+                return redirect("customer:home")
     else:
         authentication_error = False
     

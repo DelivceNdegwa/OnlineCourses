@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap');
+
+:root{
+    --primary-color: rgb(23, 23, 23);
+    --secondary-color: #3da700;/*#44b901;#5ada10*/
+    --secondary-color-brighter:#4dd100;
+    --primary-variant: #EBEBEB;
+    --secondary-variant: rgb(0, 20, 44);
+    --secondary-variant-brighter: rgb(11, 35, 65);
+
+    --default-font: 'Ubuntu', sans-serif;
+    --variant-font: 'PT Sans', sans-serif;
+    
+    --heading-weight: 900;
+    --title-weight:700;
+    --smaller-title-weight:500;
+
+    --btn-border-radius: 10px;
+    --card-border-radius: 10px;
+    --search-border-radius: 10px;
+    --image-border-radius: 15px;
+}
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: var(--default-font);
+    border-style: none;
+}
+
+body{
+    background-color: var(--primary-variant);
+}
+
+
+.sidebar{
+    position: fixed;
+    background-color: var(--primary-color);
+    left: 0;
+    top: 0;
+    bottom:0;
+    width: 25vw;
+    overflow: none;
+}
+
+.sidebar ul{
+    height: 100%;
+}
+
+.sidebar ul .sidebar-item-bottom{
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 10px;
+    right: 0;
+    left: 0;
+}
+
+.sidebar ul li{
+    margin: 10px;
+}
+
+.sidebar ul li a{
+    display: block !important;
+    text-decoration: none;
+    color: var(--secondary-color);
+    padding: 15px 15px;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.sidebar ul li .active, .sidebar ul li a:hover{
+    background-color: var(--secondary-color) !important;
+    color: var(--primary-color) !important;
+}
+
+.dashboard-content{
+    position: absolute;
+    left: 25vw;
+    top: 0;
+    height:140vh;
+}

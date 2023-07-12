@@ -1,13 +1,35 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" type="text/css">
     {% block css %}{% endblock %}
 </head>
-<body>
-    {% block content %}{% endblock %}
-    {% block js %}{% endblock %}
-</body>
+    <body>        
+        <!-- 
+            ADMIN DASHBOARD SUMMARY
+            1. Home- Contains a summary of current courses and the enrollments, course reviews from the highest, current settings, current categories and number of courses under it
+            2. Course categories: View all categories in table, have option to add, or view specific category
+            3. All courses, listed in categories dropdown eg: all, category1, category2 ...
+            4. Subscriptions: Users that have subsrcibed & those that have not
+            5. Any messages and inquiries
+            6. System Settings
+
+            STUDENT DASHBOARD SUMMARY
+            1. Home- Contains student's courses, and progress
+            2. Ongoing courses
+            3. Completed courses
+            4. Payment receipts
+            3. Logout
+
+        -->
+        {% include "dashboard/components/students_sidebar.html" %}
+        <div class="dashboard-content">
+            {% block content %}{% endblock %}
+        </div>
+        {% block js %}{% endblock %}
+    </body>
 </html>
