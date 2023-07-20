@@ -16,8 +16,25 @@ def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = False
+            print(f"PASSWORD= {form.cleaned_data['password1']}")
+            # user = form.save(commit=False)
+            username = form.cleaned_data['email']
+            email = form.cleaned_data['email']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            password = form.cleaned_data['password1']
+            is_active = False
+            
+            user = User.objects.create_user(
+                username=username,
+                email=email,
+                password=password
+            )
+
+            user.first_name = first_name
+            user.last_name = last_name
+            user.is_active = is_active
+            
             user.save()
 
             current_site = get_current_site(request)
@@ -42,13 +59,16 @@ def register(request):
 
 
 def activate(request, uidb64, token):
+    print(f"STARTING HERE")
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
+        print(f"USER PASSWORD:::HERE {user.password}")
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
 
     if user is not None and default_token_generator.check_token(user, token):
+        print("USER IS NOT NONE")
         user.is_active = True
         user.save()
         return render(request, 'auth/activation_success.html')
@@ -56,21 +76,22 @@ def activate(request, uidb64, token):
         return render(request, 'auth/activation_failed.html')
 
 def login_view(request):
-    form = CustomAuthenticationForm(request)
+    form = CustomAuthenticationForm()
     authentication_error = True
     
     if request.method == "POST":
         form = CustomAuthenticationForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            
-            user = authenticate(request, username=username, password=password)
-            
-            if user is not None:
-                login(request, user)
-                authentication_error = False
-                return redirect("customer:home")
+        
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        user = authenticate(request, username=username, password=password)
+        print(f"USER= {user}")
+        if user is not None:
+            login(request, user)
+            authentication_error = False
+            return redirect("customer:home")
+
     else:
         authentication_error = False
     

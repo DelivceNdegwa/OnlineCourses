@@ -19,8 +19,10 @@
             </ul>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-0">
-            <div class="d-flex align-items-center justify-content-end h-100">
-                {% if request.user.is_authenticated %}
+            <div class="d-flex align-items-center justify-content-end h-100"> 
+                {% if request.user.is_authenticated and not request.user.is_active %}
+                    <a href="#" title="Check your email to activate your account" class="btn btn-custom-secondary mx-3">Activate account</a>
+                {% elif request.user.is_authenticated and request.user.is_active %}
                     <a href="{% url 'users:logout' %}" class="btn btn-custom-secondary mx-3">Logout</a>
                 {% else %}
                     <a href="{% url 'users:sign-up' %}" class="btn btn-custom-secondary-outlined">Sign Up</a>

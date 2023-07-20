@@ -2,21 +2,34 @@
 
 
 {% block content %}
-    <ul>
-        <li>
-            <a href="#" class="active">Home</a>
-        </li>
-        <li>
-            <a href="#">Ongoing Courses</a>
-        </li>
-        <li>
-            <a href="#">Completed Courses</a>
-        </li>
-        <li>
-            <a href="#">Payments</a>
-        </li>
-        <li class="sidebar-item-bottom">
-            <a href="#">Logout</a>
-        </li>
-    </ul>
+    <li>
+        <a href="#" class="active">
+            <box-icon 
+                name='menu-alt-right' 
+                size="lg"
+                color="var(--secondary-color)"
+            ></box-icon>
+            <span>Home</span>
+        </a>
+    </li>
+    <li>
+        <a href="#">
+            <box-icon 
+                name='menu-alt-right' 
+                size="lg"
+                color="var(--secondary-color)"
+            ></box-icon>
+            <span>My Learning</span>
+        </a>
+    </li>
+    <li>
+        <a href="#">
+            <box-icon 
+                name='menu-alt-right' 
+                size="lg"
+                color="var(--secondary-color)"
+            ></box-icon>
+            <span>Payments</span>
+        </a>
+    </li>
 {% endblock %}

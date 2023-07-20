@@ -1,0 +1,11 @@
+{% load static %}
+<div class="card shadow-sm card-rounded border-0 w-100">
+    <div class="card-body bg-custom-secondary card-rounded">
+        <div class="row align-items-center">
+            <div class="col-12">
+                <p class="welcome-text-main display-6">Welcome {{ request.user.first_name }}!</p>
+                <small class="text-secondary welcome-text-secondary lead text-dark">Its great to see you!</small>
+            </div>
+        </div>
+    </div>
+</div>

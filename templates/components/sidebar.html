@@ -1,3 +1,18 @@
 <div class="sidebar">
-    {% block content %}{% endblock %}
+    <a class="navbar-brand d-none d-lg-block text-center" href="{% url 'frontend:home' %}">SHÜHARi</a>
+    <ul>
+        {% block content %}{% endblock %}
+        {% if request.user.is_authenticated %}
+            <li class="sidebar-item-bottom">
+                <a href="{% url 'users:logout' %}">
+                    <box-icon 
+                        name='menu-alt-right' 
+                        size="lg"
+                        color="var(--secondary-color)"
+                    ></box-icon>
+                    <span>Logout</span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
 </div>

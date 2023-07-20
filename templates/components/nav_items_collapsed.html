@@ -12,10 +12,14 @@
         <li class="nav-item">
             {% include "components/search_form.html" %}
         </li>
-        {% if request.user.is_authenticated %}
-        <li class="nav-item">
-            <a href="{% url 'users:logout' %}" class="btn btn-custom-secondary-outlined d-inline-block w-25">Logout</a>
-        </li>
+        {% if request.user.is_authenticated and not request.user.is_active %}
+            <li class="nav-item">
+                <a href="#" title="Check your email to activate your account" class="btn btn-custom-secondary mx-3">Activate account</a>
+            </li>
+        {% elif request.user.is_authenticated and request.user.is_active %}
+            <li class="nav-item">
+                <a href="{% url 'users:logout' %}" class="btn btn-custom-secondary mx-3">Logout</a>
+            </li>
         {% else %}
             <li class="nav-item">
                 <a href="{% url 'users:sign-up' %}" class="btn btn-custom-secondary-outlined d-inline-block w-25">Register</a>

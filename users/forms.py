@@ -34,8 +34,21 @@ class UserRegistrationForm(UserCreationForm):
         return user   
 
 
-class CustomAuthenticationForm(AuthenticationForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['username'].label = 'Email'
-        self.fields['password'].label = 'Password'
+# class CustomAuthenticationForm(AuthenticationForm):
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.fields['username'].label = 'Email'
+#         self.fields['password'].label = 'Password'
+
+
+class CustomAuthenticationForm(forms.Form):
+    username = forms.EmailField(
+        label="Email",
+        required=True,
+        widget=forms.TextInput(attrs={'placeholder': 'example@gmail.com'}),
+    )
+    password = forms.CharField(
+        label='Password',
+        max_length=228,
+        widget=forms.PasswordInput(attrs={'placeholder': 'XXXXXXXX'}),
+    )
