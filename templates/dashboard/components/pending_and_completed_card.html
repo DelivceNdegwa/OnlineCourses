@@ -1,0 +1,25 @@
+<div class="stats-course-card card shadow card-rounded border-0 h-100 w-100">
+    <div class="card-body card-rounded bg-custom-primary-variant">
+        <div class="row align-items-center h-100">
+            <div class="col-3">
+                <p class="display-5 text-center">{{ stat.count }}</p>
+            </div>
+            <div class="col-9">
+                <p class="h5">{{ stat.description|safe }}</p>
+            </div>
+            {% if stat.type == 'pending' %}
+                <!-- <box-icon
+                    name='time' 
+                    size="sm"
+                ></box-icon> -->
+                <i class='bx bx-time bx-xs'></i>
+            {% else %}
+                <!-- <box-icon
+                    name='check-circle'
+                    size="sm"
+                ></box-icon> -->
+                <i class='bx bx-check-circle bx-xs'></i>
+            {% endif %}
+        </div>
+    </div>
+</div>

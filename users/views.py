@@ -90,7 +90,9 @@ def login_view(request):
         if user is not None:
             login(request, user)
             authentication_error = False
-            return redirect("customer:home")
+            if not user.is_superuser:
+                return redirect("customer:home")
+            return redirect("staff:home")
 
     else:
         authentication_error = False

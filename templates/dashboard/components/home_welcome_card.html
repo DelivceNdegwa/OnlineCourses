@@ -1,10 +1,13 @@
 {% load static %}
-<div class="card shadow-sm card-rounded border-0 w-100">
-    <div class="card-body bg-custom-secondary card-rounded">
-        <div class="row align-items-center">
-            <div class="col-12">
-                <p class="welcome-text-main display-6">Welcome {{ request.user.first_name }}!</p>
-                <small class="text-secondary welcome-text-secondary lead text-dark">Its great to see you!</small>
+<div class="card shadow card-rounded border-0 h-100 w-100" style="margin: 0 !important; padding: 0 !important;">
+    <div class="card-body bg-custom-secondary card-rounded" style="margin: 0 !important; padding: 0 !important;">
+        <div class="row align-items-center h-100" style="margin: 0 !important; padding: 0 !important;">
+            <div class="col-4">
+                <img src="{% static 'images/light.svg' %}" class="w-100 img-fluid" alt="Knowledge bulb" style="max-height:100px; margin: 0 !important; padding: 0 !important;">
+            </div>
+            <div class="col-8">
+                <p class="welcome-text-main h3">Welcome {{ request.user.first_name }}!</p>
+                <small class="text-secondary welcome-text-secondary text-dark">Its great to see you!</small>
             </div>
         </div>
     </div>

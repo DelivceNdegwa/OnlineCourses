@@ -23,6 +23,7 @@
                 {% if request.user.is_authenticated and not request.user.is_active %}
                     <a href="#" title="Check your email to activate your account" class="btn btn-custom-secondary mx-3">Activate account</a>
                 {% elif request.user.is_authenticated and request.user.is_active %}
+                    <a href="{% url 'customer:home' %}" class="nav-link active mx-3">Dashboard</a>
                     <a href="{% url 'users:logout' %}" class="btn btn-custom-secondary mx-3">Logout</a>
                 {% else %}
                     <a href="{% url 'users:sign-up' %}" class="btn btn-custom-secondary-outlined">Sign Up</a>

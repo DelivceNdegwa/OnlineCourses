@@ -1,0 +1,9 @@
+{% extends "basefiles/dashboard.html" %}
+{% load static %}
+
+{% block content %}
+    {% if courses %}
+    {% else %}
+        {% include "dashboard/components/no_courses.html" %}
+    {% endif %}
+{% endblock %}

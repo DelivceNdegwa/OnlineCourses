@@ -28,6 +28,48 @@
     font-family: var(--default-font);
     border-style: none;
 }
+.text-custom-secondary{
+    color: var(--secondary-color) !important;
+}
+.btn-custom-secondary{
+    background-color: var(--secondary-color) !important;
+    color: var(--primary-variant) !important;
+}
+
+.btn-custom-secondary-variant{
+    background-color: var(--secondary-variant) !important;
+}
+
+.btn-custom-secondary:hover{
+    background-color: var(--secondary-color-brighter) !important;
+    color: var(--primary-variant) !important;
+}
+.btn-custom-secondary-outlined{
+    color: var(--secondary-color-brighter) !important;
+    background-color: transparent !important;
+    border: 2px solid var(--secondary-color-brighter) !important;
+}
+
+.btn-custom-secondary-outlined:hover{
+    background-color: var(--secondary-color-brighter) !important;
+    color: var(--primary-variant) !important;
+}
+
+
+.bg-custom-primary{
+    background-color: var(--primary-color) !important;
+    color: var(--primary-variant) !important;
+}
+
+.bg-custom-primary-variant{
+    color: var(--primary-color) !important;
+    background-color: var(--primary-variant) !important;
+}
+
+.bg-custom-secondary{
+    background-color: var(--secondary-color) !important;
+    color: var(--primary-color) !important;
+}
 
 html {
     overflow: hidden;
@@ -152,6 +194,15 @@ body{
 
 input:focus{
     outline: none !important;
+}
+
+.stats-course-card i{
+    position:absolute;
+    margin: 8px;
+    top: 0;
+    right: 0;
+    height: 24px;
+    width: 24px;
 }
 
 @media (max-width:1200px) {

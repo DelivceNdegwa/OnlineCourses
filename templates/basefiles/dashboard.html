@@ -29,8 +29,12 @@
             3. Logout
 
         -->
-        {% include "dashboard/components/students_sidebar.html" %}
-        <div class="dashboard-content">
+        {% if not request.user.is_superuser %}
+            {% include "dashboard/components/students_sidebar.html" %}
+        {% else %}
+            {% include "dashboard/components/admin_sidebar.html" %}
+        {% endif %}
+        <div class="dashboard-content bg-custom-primary-variant">
             <div class="container-fluid mt-2">
                 {% block content %}{% endblock %}
             </div>  

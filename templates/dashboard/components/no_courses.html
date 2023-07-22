@@ -1,0 +1,10 @@
+{% load static %}
+<div class="row align-items-center justify-content-center h-100 mt-5">
+    <div class="col-12 text-center">
+        <img src="{% static 'images/no_courses.svg' %}" alt="No courses" class="w-25">
+        <p class="h4">You have no courses yet</p>
+        <small class="text-secondary">Your Courses will appear here </small>
+        <br>
+        <a href="{% url 'frontend:home' %}" class="btn btn-custom-secondary mt-1"> get a course</a>
+    </div>
+</div>
