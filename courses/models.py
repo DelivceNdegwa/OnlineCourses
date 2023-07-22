@@ -14,13 +14,26 @@ class SystemSettings(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:
+        managed = False
         verbose_name_plural = 'SystemSettings'
         ordering = ['-created_at']
         
+    # def save(self, *args, **kwargs):
+    #         if not self.pk and SystemSettings.objects.exists():
+    #             raise ValidationError('There is can be only one SystemSetting instance')
+    #         return super(SystemSettings, self).save(*args, **kwargs)
     def save(self, *args, **kwargs):
-            if not self.pk and SystemSettings.objects.exists():
-                raise ValidationError('There is can be only one SystemSetting instance')
-            return super(SystemSettings, self).save(*args, **kwargs)
+        if self.id == 1:
+            try:
+                existing_instance = SystemSettings.objects.get(pk=1)
+                for field in self._meta.fields:
+                    if field.name != 'id':
+                        setattr(existing_instance, field.name, getattr(self, field.name))
+                existing_instance.save()
+            except SystemSettings.DoesNotExist:
+                super().save(*args, **kwargs)
+        else:
+            super().save(*args, **kwargs)
 
 
 class Category(models.Model):
