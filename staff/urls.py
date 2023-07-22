@@ -3,6 +3,7 @@ from staff import views
 
 app_name="staff"
 urlpatterns = [
-    path('home/', views.home, name="home")
+    path('home/', views.home, name="home"),
+    path('categories/', views.categories, name="categories")
 ]
 

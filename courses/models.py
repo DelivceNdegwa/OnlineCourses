@@ -79,6 +79,9 @@ class Course(models.Model):
         return self.title
 
 
+
+
+
 class Section(models.Model):
     title = models.CharField(max_length=100)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
