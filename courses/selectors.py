@@ -1,7 +1,7 @@
 from typing import Optional
+from django.db.models import Count
 from base import selectors, exceptions, utils
-from django.contrib.auth.models import User
-from courses.models import SystemSettings, Category, Course, Section, Video,Document
+from courses.models import SystemSettings, Category, Course, CourseStudent, Section, Video,Document
 
 
 # System Settings
@@ -30,11 +30,21 @@ def get_specific_course(id: int) -> Course:
 def get_course_sections(filter_params: Optional[dict]=None):
     allowed_fields = utils.get_model_field_names(Section)
     if not filter_params['course']:
-        raise exceptions.CustomException("Please provide a course")
+        raise exceptions.CustomException("Please provide a section")
     return selectors.get_objects(Section, filter_params, allowed_fields)
 
-# def get_course_students(course_id: int) -> Queryset[User]:
-    
+
+def get_course_students(filter_params: Optional[dict]):
+    allowed_fields = ['id', 'course__id', 'student__id', 'active']
+    if not filter_params['course__id']:
+        raise exceptions.CustomException("course__id is a mandatory field")
+    return selectors.get_objects(CourseStudent, filter_params , allowed_fields)
+
+
+def get_courses_with_active_students():
+    return Course.objects.filter(coursestudent__active=True).annotate(num_active_students=Count('coursestudent__student'))
+
+
 def get_specific_section(filter_params: Optional[dict]=None) -> Section:
     allowed_fields = ['id', 'course']
     selectors.get_objects(Section, filter_params, allowed_fields).first()

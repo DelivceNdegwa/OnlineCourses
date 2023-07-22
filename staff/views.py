@@ -12,7 +12,8 @@ from courses import selectors
 def home(request):
     context = {
         "categories": selectors.get_categories(),
-        "courses": selectors.get_courses()
+        "courses": selectors.get_courses(),
+        "enrolled_courses": selectors.get_courses_with_active_students()
     }
     return render(request, "dashboard/admin/home.html", context)
 

@@ -1,8 +1,11 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
-from . import constants
-from .utils import VideoProcessor
+
+from courses import constants
+from courses.utils import VideoProcessor
+
+from users.models import Role
 
 
 User = get_user_model()
@@ -74,11 +77,19 @@ class Course(models.Model):
     instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     description = models.TextField()
+    number_of_students = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
 
 
+class CourseStudent(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.PROTECT)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    active = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return f"{self.student.username}:{self.course.title}"
 
 
 
