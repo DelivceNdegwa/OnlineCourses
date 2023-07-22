@@ -15,6 +15,7 @@ class SystemSettings(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:
         verbose_name_plural = 'SystemSettings'
+        ordering = ['-created_at']
         
     def save(self, *args, **kwargs):
             if not self.pk and SystemSettings.objects.exists():
