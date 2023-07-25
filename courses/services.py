@@ -2,6 +2,7 @@ from typing import Optional
 from django.db import transaction
 
 from courses.models import SystemSettings, Category
+from courses import selectors
 
 
 # Create System Setting
@@ -22,3 +23,8 @@ def create_category(name, image, short_description) -> Category:
         short_description=short_description
     )
 
+
+@transaction.atomic
+def delete_category(category_id: int):
+    category = selectors.get_specific_category(category_id)
+    category.delete()

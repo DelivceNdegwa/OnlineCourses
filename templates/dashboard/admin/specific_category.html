@@ -1,0 +1,30 @@
+{% extends "basefiles/dashboard.html" %}
+{% load static %}
+
+
+{% block content %}
+    <div class="row justify-content-center align-items-center h-100">
+        <div class="col-sm-12 col-md-8 col-lg-8">
+            {% if message %}
+                <div class="text-end">
+                    <div class="w-50 alert {% if success %}alert-success{% else %}alert-danger{% endif %} d-inline-block text-center">
+                        <i class="fa mr-2 {% if not success %}fa-exclamation-triangle{% else %}fa-check-circle{% endif %}"></i>
+                        <span class="mx-2">{{ message }}</span>
+                    </div>
+                </div>
+            {% endif %}
+            <form action="{% url 'staff:read_update_category' category.id %}" method="POST" enctype="multipart/form-data">
+                {% include "components/form_light.html" %}
+                <button class="btn btn-custom-secondary mt-3 w-100">Update</button>
+            </form>
+        </div>
+        <div class="col-sm-12 col-md-8 col-lg-8 align-self-end">
+            <div class="mt-5">
+                <a href="{% url 'staff:delete_category' category.id %}" class="btn btn-danger">
+                    <i class="fa fa-exclamation-triangle mr-3"></i>
+                    Delete
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
