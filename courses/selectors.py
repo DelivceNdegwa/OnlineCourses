@@ -20,7 +20,7 @@ def get_specific_category(id: int) -> Category:
 # Courses
 def get_courses(filter_params: Optional[dict]=None):
     allowed_fields = utils.get_model_field_names(Course)
-    return selectors.get_objects(Category, filter_params, allowed_fields)
+    return selectors.get_objects(Course, filter_params, allowed_fields)
 
 
 def get_specific_course(id: int) -> Course:

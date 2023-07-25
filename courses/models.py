@@ -74,7 +74,8 @@ class Instructor(models.Model):
 
 class Course(models.Model):
     title = models.CharField(max_length=100)
-    instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE)
+    thumbnail_image = models.ImageField(upload_to="courses/", null=True)
+    instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE, null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     description = models.TextField()
     number_of_students = models.IntegerField(default=0)
