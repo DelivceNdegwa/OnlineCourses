@@ -92,3 +92,16 @@ class VideoProcessor:
         elif protocol == constants.DASH:
             self.video_instance.dash_manifest.name = manifest_path
         self.video_instance.save()
+
+
+# class CreateNewNotification:
+#     def __init__(self, notification_type):
+#         self.notification_type = notification_type
+#         self.create_notification_message()
+    
+#     def create_notification_message(self):
+#         # NEW_ENROLLMENT = "new_enrollment"
+#         # NEW_MESSAGE = "new_message"
+#         # NEW_SIGNUP = "new_student"
+#         # SUBSCRIPTION = "subscription"
+#         notification

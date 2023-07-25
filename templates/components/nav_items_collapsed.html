@@ -18,6 +18,13 @@
             </li>
         {% elif request.user.is_authenticated and request.user.is_active %}
             <li class="nav-item">
+                {% if request.user.is_superuser %}
+                    <a href="{% url 'staff:home' %}" class="nav-link active mx-3">Dashboard</a>
+                {% else %}
+                    <a href="{% url 'customer:home' %}" class="nav-link active mx-3">Dashboard</a>
+                {% endif %}
+            </li>
+            <li class="nav-item">
                 <a href="{% url 'users:logout' %}" class="btn btn-custom-secondary mx-3">Logout</a>
             </li>
         {% else %}

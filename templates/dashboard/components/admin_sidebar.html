@@ -2,8 +2,12 @@
 
 
 {% block content %}
+{% url 'staff:home' as home_url %}
+{% url 'staff:categories' as categories_url %}
+{% url 'staff:courses' as courses_url %}
+
     <li>
-        <a href="#" class="active">
+        <a href="{{ home_url }}" class="{% if request.path == home_url %}active{% endif %}">
             <box-icon 
                 name='menu-alt-right' 
                 size="lg"
@@ -13,7 +17,7 @@
         </a>
     </li>
     <li>
-        <a href="#" class="">
+        <a href="{{ categories_url }}" class="{% if request.path == categories_url %}active{% endif %}">
             <box-icon 
                 name='menu-alt-right' 
                 size="lg"
@@ -23,7 +27,7 @@
         </a>
     </li>
     <li>
-        <a href="#" class="">
+        <a href="{{ courses_url }}" class="{% if request.path == courses_url %}active{% endif %}">
             <box-icon 
                 name='menu-alt-right' 
                 size="lg"

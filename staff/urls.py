@@ -4,6 +4,7 @@ from staff import views
 app_name="staff"
 urlpatterns = [
     path('home/', views.home, name="home"),
-    path('categories/', views.categories, name="categories")
+    path('categories/', views.categories, name="categories"),
+    path('courses/', views.courses, name="courses")
 ]
 

@@ -180,19 +180,51 @@ class Message(models.Model):
     title = models.CharField(max_length=100)
     body = models.TextField()
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.title
 
 class Subscription(models.Model):
+    SUBSCRIPTION_CHOICES = (
+        (constants.ONETIME, 'One time'),
+        (constants.MONTHLY, 'Monthly')
+    )
+    
+    PAYMENT_METHOD = (
+        (constants.MPESA, 'Mpesa'),
+        (constants.PAYPAL, 'Paypal')
+    )
+    
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    payment_method = models.CharField(max_length=100)
-    subscription_type = models.CharField(max_length=100)  # One-time or Monthly
+    payment_method = models.CharField(max_length=100, choices=SUBSCRIPTION_CHOICES, default=constants.MPESA)
+    subscription_type = models.CharField(max_length=100, choices=SUBSCRIPTION_CHOICES, default=constants.MONTHLY)  # One-time or Monthly
     start_date = models.DateField()
-    end_date = models.DateField()
+    end_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return f"Subscription for {self.course}"
+
+
+class Notification(models.Model):
+    NOTIFICATION_CATEGORY = (
+        (constants.NEW_ENROLLMENT, 'New enrollment'),
+        (constants.NEW_MESSAGE, 'New message'),
+        (constants.NEW_SIGNUP, 'New signup'),
+        (constants.SUBSCRIPTION, 'Subscription'),
+        (constants.NEW_COURSE, "New course"),
+        (constants.EDITED_COURSE, "Edited course")
+    )
+    message = models.TextField()
+    category = models.CharField(max_length=100, choices=NOTIFICATION_CATEGORY, default=constants.NEW_SIGNUP)
+    read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
+    
+    class Meta:
+        ordering = ("-created_at",)
+    
+    def __str__(self):
+        return f"{self.category}:{self.message}"

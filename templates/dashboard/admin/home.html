@@ -1,2 +1,54 @@
 {% extends "basefiles/dashboard.html" %}
 {% load static %}
+
+
+{% block content %}
+
+    <div class="row admin-home">
+        <div class="col-sm-12 col-md-4 col-lg-4">
+            <div class="card stats-course-card shadow border-0 card-rounded bg-custom-primary-variant">
+                <div class="card-body">
+                    <div class="row align-items-center h-100">
+                        <div class="col-3">
+                            <p class="display-5 text-center">0</p>
+                        </div>
+                        <div class="col-9">
+                            <p class="h5">Currently enrolled <br>Students</p>
+                        </div>
+                        <i class='bx bx-check-circle bx-xs'></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4">
+            <div class="card stats-course-card shadow border-0 card-rounded bg-custom-primary-variant">
+                <div class="card-body">
+                    <div class="row align-items-center h-100">
+                        <div class="col-3">
+                            <p class="display-5 text-center">0</p>
+                        </div>
+                        <div class="col-9">
+                            <p class="h5">Enrolled Courses</p>
+                        </div>
+                        <i class='bx bx-check-circle bx-xs'></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4">
+            <div class="card stats-course-card shadow border-0 card-rounded bg-custom-primary-variant">
+                <div class="card-body">
+                    <div class="row align-items-center h-100">
+                        <div class="col-3">
+                            <p class="display-5 text-center">0</p>
+                        </div>
+                        <div class="col-9">
+                            <p class="h5">Unenrolled Courses</p>
+                        </div>
+                        <i class='bx bx-check-circle bx-xs'></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
