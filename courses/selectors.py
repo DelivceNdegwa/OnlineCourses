@@ -28,9 +28,9 @@ def get_specific_course(id: int) -> Course:
 
 
 def get_course_sections(filter_params: Optional[dict]=None):
-    allowed_fields = utils.get_model_field_names(Section)
-    if not filter_params['course']:
-        raise exceptions.CustomException("Please provide a section")
+    allowed_fields = utils.get_model_field_names(Section).append('course__id')
+    if not filter_params['course__id']:
+        raise exceptions.CustomException("Please provide a course")
     return selectors.get_objects(Section, filter_params, allowed_fields)
 
 

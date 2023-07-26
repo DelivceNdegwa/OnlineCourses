@@ -79,26 +79,4 @@ def delete_category(request, category_id):
 
     return render(request, "dashboard/admin/specific_category.html", context)
 
-@staff_member_required
-def courses(request):
-    courses = selectors.get_courses()
-    paginator = Paginator(courses, 5)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    form = forms.CourseForm()
 
-    if request.method == "POST":
-        form = forms.CourseForm(request.POST, request.FILES)
-        
-        if form.is_valid():
-            form.save()
-            return redirect("staff:courses")
-    
-    context = {
-        "courses": courses,
-        "page_obj": page_obj,
-        "form": form,
-        "modal_title": "Course"
-    }
-    
-    return render(request, "dashboard/admin/courses.html", context)

@@ -1,7 +1,7 @@
 from typing import Optional
 from django.db import transaction
 
-from courses.models import SystemSettings, Category
+from courses.models import SystemSettings, Category, Section
 from courses import selectors
 
 
@@ -22,9 +22,20 @@ def create_category(name, image, short_description) -> Category:
         image=image,
         short_description=short_description
     )
+    return category
 
 
 @transaction.atomic
 def delete_category(category_id: int):
     category = selectors.get_specific_category(category_id)
     category.delete()
+    return category
+
+
+@transaction.atomic
+def create_section(title, course_id):
+    section = Section.objects.create(
+        title=title,
+        course__id=course_id
+    )
+    return section

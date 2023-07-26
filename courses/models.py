@@ -103,9 +103,7 @@ class Section(models.Model):
 
 
 class Video(models.Model):
-    title = models.CharField(max_length=100)
     video_file = models.FileField(upload_to='videos/')
-    section = models.ForeignKey(Section, on_delete=models.PROTECT, null=True)
     hls_manifest = models.FileField(upload_to='hls/', blank=True, null=True)
     dash_manifest = models.FileField(upload_to='dash/', blank=True, null=True)
     
@@ -120,17 +118,24 @@ class Video(models.Model):
         return self.dash_manifest.url
     
     def __str__(self):
-        return f"{self.title}:{self.video_file}"
+        return str(self.video_file)
 
 
 class Document(models.Model):
-    title = models.CharField(max_length=100)
-    section = models.ForeignKey(Section, on_delete=models.PROTECT)
     document_file = models.FileField(upload_to='documents/')
 
     def __str__(self):
-        return self.title
+        return str(self.document_file)
 
+class VideoDocument(models.Model):
+    title = models.CharField(max_length=100)
+    section = models.ForeignKey(Section, on_delete=models.PROTECT, null=True)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE, null=True, blank=True)
+    document = models.ForeignKey(Document, on_delete=models.CASCADE, null=True, blank=True)
+    position = models.IntegerField()
+    
+    def __str__(self):
+        return f"{self.position}:{self.title}"
 
 class Review(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
