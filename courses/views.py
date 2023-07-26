@@ -51,7 +51,7 @@ def admin_course_details(request, course_id):
     }
     message = ""
     success = False
-    course_sections = selectors.get_course_sections(filter_by_course_id)
+    course_sections = selectors.get_course_sections(filter_by_course_id, extra_fields=['course__id'])
     
     if request.method == "POST":
         form = forms.SectionForm(request.POST)
@@ -64,7 +64,7 @@ def admin_course_details(request, course_id):
                 message = "Section created successfully"
                 success = True
                 form = forms.SectionForm()
-                url = reverse('staff:course_details', kwargs={'category_id': course_id})
+                url = reverse('staff:course_details', kwargs={'course_id': course_id})
                 return redirect(url)
             except Exception as e:
                 print(f"SECTION_CREATION: {e}")

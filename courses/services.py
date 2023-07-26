@@ -1,4 +1,3 @@
-from typing import Optional
 from django.db import transaction
 
 from courses.models import SystemSettings, Category, Section
@@ -35,7 +34,14 @@ def delete_category(category_id: int):
 @transaction.atomic
 def create_section(title, course_id):
     course = selectors.get_specific_course(course_id)
-    print(f"COURSE HERE={course}")
+    filter_params = {
+        "course__id": course_id,
+        "title": title
+    }
+    section = selectors.get_course_sections(filter_params)
+    if section:
+        return section[0]
+    
     section = Section.objects.create(
         title=title,
         course=course

@@ -27,8 +27,12 @@ def get_specific_course(id: int) -> Course:
     return selectors.get_specific_object(Course, id)
 
 
-def get_course_sections(filter_params: Optional[dict]=None):
-    allowed_fields = utils.get_model_field_names(Section).append('course__id')
+def get_course_sections(filter_params: Optional[dict]=None, extra_fields: list=[]):
+    allowed_fields = utils.get_model_field_names(Section)
+
+    if extra_fields:
+        allowed_fields += extra_fields
+
     if not filter_params['course__id']:
         raise exceptions.CustomException("Please provide a course")
     return selectors.get_objects(Section, filter_params, allowed_fields)
@@ -36,7 +40,7 @@ def get_course_sections(filter_params: Optional[dict]=None):
 
 def get_course_students(filter_params: Optional[dict]):
     allowed_fields = ['id', 'course__id', 'student__id', 'active']
-    if not filter_params['course__id']:
+    if not filter_params['course']:
         raise exceptions.CustomException("course__id is a mandatory field")
     return selectors.get_objects(CourseStudent, filter_params , allowed_fields)
 
