@@ -2,5 +2,53 @@
 {% load static %}
 
 {% block content %}
-    <h1>No sections yet</h1>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-6 col-sm-10">
+                <div class="row">
+                    {% if message and not success %}
+                        <div class="col-sm-9 col-6">
+                            <div class="row justify-content-end">
+                                <div class="col-sm-6 col-md-5 col-lg-4">
+                                    <div class="alert alert-danger">
+                                        <p>{{ messages }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="col-sm-9 col-md-6">
+                        <div class="row justify-content-end">
+                            <h4>{{ course.title }}</h4>
+                        </div> 
+                    </div>
+                    
+                    {% if sections %}
+                        <div class="col-sm-3 col-md-6 text-end">
+                            <button type="button" class="btn btn-custom-secondary border-0" title="Add new section" data-bs-toggle="modal" data-bs-target="#sectionCreationModal">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-6 col-sm-10"> 
+                <div class="row">
+                    {% for section in sections %}
+                        <p>{{ section }}</p>
+                    {% empty %}
+                        {% include "dashboard/components/empty_section.html" %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include "components/creation_section_modal.html" %}
+{% endblock %}
+{% block js %}
+    <script>
+        $(document).ready(function(){
+            
+        });
+    </script>
 {% endblock %}

@@ -34,8 +34,10 @@ def delete_category(category_id: int):
 
 @transaction.atomic
 def create_section(title, course_id):
+    course = selectors.get_specific_course(course_id)
+    print(f"COURSE HERE={course}")
     section = Section.objects.create(
         title=title,
-        course__id=course_id
+        course=course
     )
     return section

@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
+from django.urls import reverse
 from django.core.paginator import Paginator
 from django.contrib.admin.views.decorators import staff_member_required
 
@@ -48,13 +49,33 @@ def admin_course_details(request, course_id):
     filter_by_course_id = {
         "course__id": course_id
     }
-    
+    message = ""
+    success = False
     course_sections = selectors.get_course_sections(filter_by_course_id)
+    
+    if request.method == "POST":
+        form = forms.SectionForm(request.POST)
+        message = "Section was not created, something went wrong, please try again"
+
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            try:
+                services.create_section(title, course_id)
+                message = "Section created successfully"
+                success = True
+                form = forms.SectionForm()
+                url = reverse('staff:course_details', kwargs={'category_id': course_id})
+                return redirect(url)
+            except Exception as e:
+                print(f"SECTION_CREATION: {e}")
+            
     
     context = {
         "course": course,
         "sections": course_sections,
-        "form": form
+        "form": form,
+        "message": message,
+        "success": success
     }
     
     return render(request, "dashboard/admin/course_details.html", context)

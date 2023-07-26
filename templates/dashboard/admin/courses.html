@@ -37,7 +37,7 @@
                                             <!-- <th scope="row">{{ forloop.counter }}</th> -->
                                             <td>{{ course.title }}</td>
                                             <td class="text-end">
-                                                <a href="#" class="btn border-0 me-1">
+                                                <a href="{% url 'staff:course_details' course.id %}" class="btn border-0 me-1">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
                                             </td>
