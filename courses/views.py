@@ -109,6 +109,16 @@ def add_section(request, course_id):
     return JsonResponse(data="Only POST requests are allowed", status_code=400)
 
 
+@staff_member_required
+def admin_course_section_details(request, section_id):
+    section = selectors.get_specific_section(section_id)
+    
+    
+    context = {
+        "section": section
+    }
+    return render(request, "dashboard/admin/section_details.html", context)
+
 # @staff_member_required
 # def section_details(request, course_id, section_id):
     

@@ -8,10 +8,8 @@ def get_objects(
     allowed_fields: Optional[list] = None
 ) -> QuerySet[Model]:
     if filter_params and allowed_fields:
-        print(f"Filters={filter_params} \n Allowed Fields={allowed_fields}")
         allowed_params = {field: value for field, value in filter_params.items() if field in allowed_fields}
         return model_cls.objects.filter(**allowed_params)
-    print("FALSE")
     return model_cls.objects.all()
 
 
