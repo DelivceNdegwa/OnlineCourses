@@ -1,0 +1,20 @@
+{% load static %}
+{% load widget_tweaks %}
+
+<form action="{% url 'staff:course_details_edit' course.id %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for hidden in course_form.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+
+    {% for field in course_form.visible_fields %}
+        <div class="form-group mt-3">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field|add_class:'form-control' }}
+            {% for error in field.errors %}
+            <small class="text-danger">{{ error }}</small>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <button class="btn btn-custom-secondary mt-3 w-100">Update course details</button>
+</form>

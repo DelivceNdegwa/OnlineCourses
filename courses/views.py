@@ -46,6 +46,7 @@ def admin_courses(request):
 def admin_course_details(request, course_id):
     form = forms.SectionForm()
     course = selectors.get_specific_course(course_id)
+    course_form = forms.CourseForm(instance=course)
     filter_by_course_id = {
         "course__id": course_id
     }
@@ -77,12 +78,25 @@ def admin_course_details(request, course_id):
         "course": course,
         "sections": page_obj,
         "form": form,
+        "course_form": course_form,
         "message": message,
         "success": success
     }
     
     return render(request, "dashboard/admin/course_details.html", context)
 
+
+@staff_member_required
+def admin_edit_course_details(request, course_id):
+    course = selectors.get_specific_course(course_id)
+    form = forms.CourseForm(instance=course)
+    
+    if request.method == "POST":
+        form = forms.CourseForm(request.POST, request.FILES, instance=course)
+        if form.is_valid():
+            form.save()
+    url = reverse('staff:course_details', kwargs={'course_id': course_id})
+    return redirect(url)
 
 @staff_member_required
 def add_section(request, course_id):
