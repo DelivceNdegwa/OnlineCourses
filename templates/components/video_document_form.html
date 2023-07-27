@@ -1,0 +1,30 @@
+{% load static %}
+
+<form action="{% url 'staff:admin_course_section_details' course_id=section.course.id section_id=section.id %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- title, video, document  -->
+    <label for="title" class="mt-3">Title</label>
+    <input name="title" class="form-control mt-2">
+    
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="section_media_radio" id="videoRadio">
+        <label class="form-check-label" for="videoRadio">
+          Video
+        </label>
+      </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="section_media_radio" id="radioDocument" checked>
+        <label class="form-check-label" for="radioDocument">
+            Document
+        </label>
+    </div>
+    <div class="mt-3" id="document-section" class="d-none">
+        <label for="document">Document</label>
+        <input class="form-control mt-2" type="file" accept=".pdf, .docx, .xls" name="document">
+    </div>
+    <div class="mt-3" id="video-section" class="d-none">
+        <label for="video">Video</label>
+        <input class="form-control mt-2" type="file" accept=".mp4, .webm, .ogg" name="video">
+    </div>
+    <button class="btn btn-custom-secondary w-100 mt-4">Upload</button>
+</form>

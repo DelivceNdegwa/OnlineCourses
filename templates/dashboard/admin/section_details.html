@@ -1,9 +1,104 @@
-
-{% extends "basefiles/dashboard.html" %}
-{% load static %}
-
-{% block title %}Edit {{ section.title }}{% endblock %}
-
+{% extends "basefiles/dashboard.html" %} {% load static %}
+{% block title %}Edit {{ section.title }}{% endblock %} 
+ 
 {% block content %}
-    Something here
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    {% if section_items %}
+        <div class="col-9 mt-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4><span>{{ section_items.count }}</span> lessons found</h4>
+                <button
+                    type="button"
+                    class="btn btn-custom-secondary border-0"
+                    title="Add new section lesson"
+                    data-bs-toggle="modal"
+                    data-bs-target="#creationSectionContentModal"
+                >
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+        </div>
+    {% else %}
+        <div class="col-9 mt-4">
+            <h4>{{ section.title }} content</h4>
+        </div>
+    {% endif %}
+    <div class="col-9">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">
+              <div class="text-end">Actions</div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for lesson in section_items %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ lesson.title }}</td>
+            <td class="text-end">
+              <a href="#" class="btn border-0 me-1">
+                <i class="fa fa-eye"></i>
+              </a>
+              <a href="#" class="btn border-0 ms-1">
+                <i class="fa fa-pencil"></i>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <!-- Display pagination links -->
+      {% if section_items %}
+      <div class="pagination text-center">
+        <span class="step-links text-center">
+          {% if section_items.has_previous %}
+          <!-- <a href="?page=1">&laquo; first</a> -->
+          <a href="?page={{ section_items.previous_page_number }}" class=""
+            >previous</a
+          >
+          {% endif %}
+
+          <span class="current">
+            Page {{ section_items.number }} of {{ section_items.paginator.num_pages }}.
+          </span>
+
+          {% if section_items.has_next %}
+          <a href="?page={{ section_items.next_page_number }}">next</a>
+          <a href="?page={{ section_items.paginator.num_pages }}">last &raquo;</a>
+          {% endif %}
+        </span>
+      </div>
+      {% else %} {% include "dashboard/components/empty_section_content.html" %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% include "components/creation_section_content_modal.html" %} 
+{% endblock %} 
+{% block js %}
+<script>
+  $(document).ready(function () {
+    function toggleSections() {
+      if ($("#videoRadio").prop("checked")) {
+        $("#document-section").hide();
+        $("#video-section").show();
+      } else if ($("#radioDocument").prop("checked")) {
+        $("#document-section").show();
+        $("#video-section").hide();
+      }
+    }
+
+    // Initial call to set visibility based on the default checked radio button
+    toggleSections();
+    // Attach a change event handler to the radio buttons
+    $("input[name=section_media_radio]").change(function() {
+      toggleSections();
+    });
+  });
+</script>
 {% endblock %}

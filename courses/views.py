@@ -52,6 +52,9 @@ def admin_course_details(request, course_id):
     message = ""
     success = False
     course_sections = selectors.get_course_sections(filter_by_course_id, extra_fields=['course__id'])
+    paginator = Paginator(course_sections, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     
     if request.method == "POST":
         form = forms.SectionForm(request.POST)
@@ -72,7 +75,7 @@ def admin_course_details(request, course_id):
     
     context = {
         "course": course,
-        "sections": course_sections,
+        "sections": page_obj,
         "form": form,
         "message": message,
         "success": success
@@ -110,13 +113,42 @@ def add_section(request, course_id):
 
 
 @staff_member_required
-def admin_course_section_details(request, section_id):
+def admin_course_section_details(request, course_id, section_id):
     section = selectors.get_specific_section(section_id)
+    section_items = selectors.get_video_documents({"section__id": section_id})
+    paginator = Paginator(section_items, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     
+    if request.method == "POST":
+        title = request.POST.get("title")
+        media_choice = request.POST.get("section_media_radio")
+
+        if media_choice == "video":
+            video_id = request.FILES.get("video")
+            video = services.create_lesson_video(video_id)
+            services.create_section_item(
+                title=title,
+                section_id=section.id,
+                video_id=video.id
+            )
+        
+        if media_choice == "document":
+            document_id = request.FILES.get("document")
+            document = services.create_lesson_document(document_id)
+            services.create_section_item(
+                title=title,
+                section_id=section.id,
+                document_id=document.id
+            )
+        url = reverse("staff:admin_course_section_details", kwargs={"course_id": section.course.id, "section_id": section.id})
+        return redirect(url)
     
     context = {
-        "section": section
+        "section": section,
+        "section_items": page_obj
     }
+    
     return render(request, "dashboard/admin/section_details.html", context)
 
 # @staff_member_required

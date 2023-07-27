@@ -96,7 +96,7 @@ class CourseStudent(models.Model):
 
 class Section(models.Model):
     title = models.CharField(max_length=100)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.title
@@ -132,7 +132,7 @@ class VideoDocument(models.Model):
     section = models.ForeignKey(Section, on_delete=models.PROTECT, null=True)
     video = models.ForeignKey(Video, on_delete=models.CASCADE, null=True, blank=True)
     document = models.ForeignKey(Document, on_delete=models.CASCADE, null=True, blank=True)
-    position = models.IntegerField()
+    position = models.IntegerField(null=True, blank=True)
     
     def __str__(self):
         return f"{self.position}:{self.title}"

@@ -33,12 +33,57 @@
                 </div>
             </div>
             <div class="col-6 col-sm-10"> 
-                <div class="row">
-                    {% for section in sections %}
-                        <p>{{ section }}</p>
-                    {% empty %}
-                        {% include "dashboard/components/empty_section.html" %}
-                    {% endfor %}
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <table class="table">
+                            <thead class="thead-dark">
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">
+                                    <div class="text-end">
+                                        Actions
+                                    </div>
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                {% for section in sections %}
+                                    <tr>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td>{{ section.title }}</td>
+                                        <td class="text-end">
+                                            <a href="{% url 'staff:admin_course_section_details' course_id=section.course.id section_id=section.id %}" class="btn border-0 me-1">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <!-- Display pagination links -->
+                        {% if sections %}
+                            <div class="pagination text-center">
+                                <span class="step-links text-center">
+                                    {% if sections.has_previous %}
+                                        <!-- <a href="?page=1">&laquo; first</a> -->
+                                        <a href="?page={{ sections.previous_page_number }}" class="">previous</a>
+                                    {% endif %}
+        
+                                    <span class="current">
+                                        Page {{ sections.number }} of {{ sections.paginator.num_pages }}.
+                                    </span>
+        
+                                    {% if sections.has_next %}
+                                        <a href="?page={{ sections.next_page_number }}">next</a>
+                                        <a href="?page={{ sections.paginator.num_pages }}">last &raquo;</a>
+                                    {% endif %}
+                                </span>
+                            </div>
+                        {% else %}
+                            {% include "dashboard/components/empty_section.html" %}
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>

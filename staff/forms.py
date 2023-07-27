@@ -1,5 +1,5 @@
 from django import forms
-from courses.models import Category, SystemSettings, Course, Section
+from courses.models import Category, SystemSettings, Course, Section, Video, Document
 
 
 class SystemSettingsForm(forms.ModelForm):
@@ -24,3 +24,4 @@ class SectionForm(forms.ModelForm):
     class Meta:
         model = Section
         fields = ['title']
+

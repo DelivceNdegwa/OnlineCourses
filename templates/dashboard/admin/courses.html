@@ -22,7 +22,7 @@
                         <table class="table mt-3">
                             <thead class="thead-dark">
                             <tr>
-                                <!-- <th scope="col">#</th> -->
+                                <th scope="col">#</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">
                                     <div class="text-end">
@@ -34,7 +34,7 @@
                             <tbody>
                                     {% for course in page_obj %}
                                         <tr>
-                                            <!-- <th scope="row">{{ forloop.counter }}</th> -->
+                                            <th scope="row">{{ forloop.counter }}</th>
                                             <td>{{ course.title }}</td>
                                             <td class="text-end">
                                                 <a href="{% url 'staff:course_details' course.id %}" class="btn border-0 me-1">
