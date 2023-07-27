@@ -133,38 +133,55 @@ def admin_course_section_details(request, course_id, section_id):
     paginator = Paginator(section_items, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    form = forms.SectionForm(instance=section)
     
     if request.method == "POST":
         title = request.POST.get("title")
         media_choice = request.POST.get("section_media_radio")
-
+        print(f"REQUEST POST= {request.POST} {request.FILES}")
+        
         if media_choice == "video":
-            video_id = request.FILES.get("video")
-            video = services.create_lesson_video(video_id)
+            video_file = request.FILES.get("video_file")
+            video = services.create_lesson_video(video_file)
+
             services.create_section_item(
                 title=title,
                 section_id=section.id,
                 video_id=video.id
             )
-        
+            
         if media_choice == "document":
-            document_id = request.FILES.get("document")
-            document = services.create_lesson_document(document_id)
+            document_file = request.FILES.get("document_file")
+            
+            document = services.create_lesson_document(document_file)
+            print(f"HERE IS DOC={document}:{document.id}")
             services.create_section_item(
                 title=title,
                 section_id=section.id,
                 document_id=document.id
             )
+
         url = reverse("staff:admin_course_section_details", kwargs={"course_id": section.course.id, "section_id": section.id})
         return redirect(url)
     
     context = {
         "section": section,
-        "section_items": page_obj
+        "section_items": page_obj,
+        "total_lessons": section_items,
+        "section_form": form
     }
     
     return render(request, "dashboard/admin/section_details.html", context)
 
-# @staff_member_required
-# def section_details(request, course_id, section_id):
+
+@staff_member_required
+def admin_course_section_details_update(request, course_id, section_id):
+    section = selectors.get_specific_section(section_id)
+    
+    if request.method == "POST":
+        form = forms.SectionForm(request.POST, instance=section)
+        if form.is_valid():
+            form.save()
+    url = reverse("staff:admin_course_section_details", kwargs={"course_id": course_id, "section_id": section_id})
+    return redirect(url)
     

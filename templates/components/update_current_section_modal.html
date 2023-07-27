@@ -1,0 +1,33 @@
+{% load static %}
+{% load widget_tweaks %}  
+  
+  <!-- Modal -->
+<div class="modal fade" id="editSectionModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">{{ modal_title }} update</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'staff:admin_course_section_details_update' course_id=section.course.id  section_id=section.id %}" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% for hidden in section_form.hidden_fields %}
+              {{ hidden }}
+          {% endfor %}
+      
+          {% for field in section_form.visible_fields %}
+              <div class="form-group mt-3">
+                  <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                  {{ field|add_class:'form-control' }}
+                  {% for error in field.errors %}
+                  <small class="text-danger">{{ error }}</small>
+                  {% endfor %}
+              </div>
+          {% endfor %}
+          <button class="btn btn-custom-secondary mt-3 w-100">Update Section</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>

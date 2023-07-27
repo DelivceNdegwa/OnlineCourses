@@ -25,3 +25,14 @@ class SectionForm(forms.ModelForm):
         model = Section
         fields = ['title']
 
+
+class VideoForm(forms.ModelForm):
+    class Meta:
+        model = Video
+        fields = ['video_file']
+
+
+class DocumentForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = ['document_file']

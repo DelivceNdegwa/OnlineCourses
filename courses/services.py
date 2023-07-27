@@ -59,11 +59,12 @@ def create_section_item(
     document_id: int = None,
     # position: int = None
 ):
-    if not video_id and not video_id:
+    if not video_id and not document_id:
         raise exceptions.CustomException("Please provide a video or a document")
     
     video = selectors.get_specific_video({'id': video_id})
     document = selectors.get_specific_document({'id': document_id})
+    section = selectors.get_specific_section(section_id)
     
     filter_params = {
         "title": title,
@@ -76,7 +77,7 @@ def create_section_item(
     if not existing_item:
         video_doc = VideoDocument.objects.create(
             title=title,
-            section=section_id,
+            section=section,
             video=video,
             document=document
         )
@@ -85,14 +86,21 @@ def create_section_item(
 
 
 def create_lesson_video(video):
-    exists = Video.objects.filter(video_file=video)
+    # exists = Video.objects.filter(video_file=video)
     # if not exists:
     #     return Video.objects.create(video_file=video)
-    return exists
+    # return exists
+    return Video.objects.create(video_file=video)
 
 
 def create_lesson_document(document):
-    exists = Document.objects.filter(document_file=document)
+    # exists = Document.objects.filter(document_file=document)
     # if not exists:
     #     return Document.objects.create(document_file=document)
-    return exists
+    
+    # return exists
+    try:
+        doc = Document.objects.create(document_file=document)
+        return doc
+    except Exception as e:
+        raise exceptions.CustomException(f"Instance not created {e}")
