@@ -36,11 +36,14 @@ def delete_category(category_id: int):
 def create_section(title, course_id):
     course = selectors.get_specific_course(course_id)
     filter_params = {
-        "course__id": course_id,
+        "course__id": course.id,
         "title": title
     }
-    section = selectors.get_course_sections(filter_params)
+
+    section = selectors.get_course_sections(filter_params, ['course__id'])
+
     if section:
+        print(f"--DUPLICATE-- ID->{course.title}:ID={section.first().course.title}, {section.first().title}")
         return section[0]
     
     section = Section.objects.create(
@@ -73,7 +76,7 @@ def create_section_item(
         "document__id": document_id
     }
     
-    existing_item = selectors.get_video_documents(filter_params, ["video__id", "document__id"])
+    existing_item = selectors.get_lessons(filter_params, ["video__id", "document__id"])
     if not existing_item:
         video_doc = VideoDocument.objects.create(
             title=title,

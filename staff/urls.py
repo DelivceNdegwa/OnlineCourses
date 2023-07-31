@@ -14,7 +14,20 @@ urlpatterns = [
     path('courses/<course_id>', course_views.admin_course_details, name="course_details"),
     path('courses/<course_id>/edit', course_views.admin_edit_course_details, name="course_details_edit"),
     path('courses/<course_id>/sections/add', course_views.add_section, name="add_section"),
-    path("courses/<course_id>/sections/<section_id>", course_views.admin_course_section_details, name="admin_course_section_details"),
-    path("courses/<course_id>/sections/<section_id>/update", course_views.admin_course_section_details_update, name="admin_course_section_details_update")
+    path(
+        "courses/<course_id>/sections/<section_id>",
+        course_views.admin_course_section_details,
+        name="admin_course_section_details"
+    ),
+    path(
+        "courses/<course_id>/sections/<section_id>/update",
+        course_views.admin_course_section_details_update,
+        name="admin_course_section_details_update"
+    ),
+    path(
+        "courses/<course_id>/sections/<section_id>/lessons/<lesson_id>",
+        course_views.admin_course_section_lesson_details,
+        name="admin_course_section_lesson_details"
+    )
 ]
 

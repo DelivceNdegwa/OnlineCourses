@@ -11,11 +11,19 @@ from staff import forms
 
 
 def video_stream(request, video_id):
-    video = get_object_or_404(Video, pk=video_id)
-    dash_manifest_url = video.generate_dash()
+    # video = get_object_or_404(Video, pk=video_id)
+    # dash_manifest_url = video.generate_dash()
+    video = selectors.get_specific_video({'id': 6})
+    dash_manifest_url = video.dash_manifest
 
     return render(request, 'courses/video.html', {'dash_manifest_url': dash_manifest_url})
 
+
+def test_stream(request):
+    lesson_6 = selectors.get_specific_lesson(6)
+    dash_manifest_url = lesson_6.video.dash_manifest
+
+    return render(request, 'courses/video.html', {'dash_manifest_url': dash_manifest_url})
 
 @staff_member_required
 def admin_courses(request):
@@ -129,7 +137,7 @@ def add_section(request, course_id):
 @staff_member_required
 def admin_course_section_details(request, course_id, section_id):
     section = selectors.get_specific_section(section_id)
-    section_items = selectors.get_video_documents({"section__id": section_id})
+    section_items = selectors.get_lessons({"section__id": section_id})
     paginator = Paginator(section_items, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -144,11 +152,15 @@ def admin_course_section_details(request, course_id, section_id):
             video_file = request.FILES.get("video_file")
             video = services.create_lesson_video(video_file)
 
+            print(f"VIDEO={video.id}")
+
             services.create_section_item(
                 title=title,
                 section_id=section.id,
                 video_id=video.id
             )
+            # Create a background task for this
+            video.generate_dash()
             
         if media_choice == "document":
             document_file = request.FILES.get("document_file")
@@ -184,4 +196,37 @@ def admin_course_section_details_update(request, course_id, section_id):
             form.save()
     url = reverse("staff:admin_course_section_details", kwargs={"course_id": course_id, "section_id": section_id})
     return redirect(url)
+
+
+@staff_member_required
+def admin_course_section_lesson_details(request, course_id, section_id, lesson_id):
+    print(lesson_id)
+    lesson = selectors.get_specific_lesson(lesson_id)
+    
+    print(f"VIDEO={lesson}, MANIFEST={lesson.title}")
+    if request.method == "POST":
+        video_file = request.FILES.get("video_file")
+        document_file = request.FILES.get("document_file")
+        title = request.POST.get("title")
+
+        if video_file and lesson.video:
+            video = selectors.get_specific_video({'id': lesson.video.id})
+            if video.video_file is not video_file:
+                video.video_file = video_file
+                video.save()
+        if document_file and lesson.document:
+            document = selectors.get_specific_document({'id': lesson.document.id})
+            if document.document_file is not document_file:
+                document.document_file = document_file
+                document.save()
+        
+        if title is not lesson.title:
+            lesson.title = title
+            lesson.save()
+            
+    context = {
+        "lesson": lesson
+    }   
+    
+    return render(request, "dashboard/admin/lesson_details.html", context)
     

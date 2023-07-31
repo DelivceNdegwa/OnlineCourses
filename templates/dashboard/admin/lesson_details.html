@@ -1,6 +1,49 @@
-<!-- {% extends "basefiles/dashboard.html" %}
+{% extends "basefiles/dashboard.html" %}
 {% load static %}
 
 {% block title %}{{ lesson.title }}{% endblock %}
 {% block content %}
-    {% if lesson.video_file %} -->
+    Lesson will be here hapa {{ lesson.video.dash_manifest }}
+    <div style="height:300px !important; background:red; width:100%;">
+        {% comment %}
+        <vm-player controls style="--vm-player-width: 360px; --vm-player-height: 360px;">
+            <vm-dash
+                version="latest" 
+                poster="https://images.unsplash.com/photo-1607434472257-d9f8e57a643d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=872&q=80"
+                id="{{ lesson.video.dash_manifest }}"
+                src="/media/dash/7/manifest.mpd "
+            >
+                <vm-spinner></vm-spinner>
+            </vm-dash>
+            <!-- ... -->
+        </vm-player>
+        {% endcomment %}
+        <!-- By default there are no controls so let's turn them on. -->
+        {% comment %}
+        <vm-player controls style="--vm-player-width: 10px; height: 360px !important;">
+            <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
+            <!-- These are passed directly to the underlying HTML5 `<video>` element. -->
+            <!-- Why `data-src`? Lazy loading, you can always use `src` if you prefer.  -->
+            <source data-src="{{ lesson.video.video_file.url }}" type="video/mp4" />
+            <track
+                default
+                kind="subtitles"
+                src="https://media.vimejs.com/subs/english.vtt"
+                srclang="en"
+                label="English"
+            />
+            </vm-video>
+        
+            <!-- ... -->
+        </vm-player>
+        {% endcomment %}
+        <vm-player controls>
+            <vm-dash
+              src="{{ lesson.video.dash_manifest }}"
+              version="latest"
+              poster="/media/poster.png"
+            ></vm-dash>
+            <!-- ... -->
+        </vm-player>
+    </div>
+{% endblock %}

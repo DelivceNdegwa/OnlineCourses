@@ -38,9 +38,9 @@ def get_specific_course(id: int) -> Course:
 
 def get_course_sections(filter_params: Optional[dict]=None, extra_fields: list=[]):
     allowed_fields = utils.get_model_field_names(Section)
-
-    # if extra_fields:
-    #     allowed_fields += extra_fields
+    
+    if extra_fields:
+        allowed_fields += extra_fields
 
     if not filter_params['course__id']:
         raise exceptions.CustomException("Please provide a course")
@@ -82,16 +82,16 @@ def get_section_documents(filter_params: Optional[dict]=None):
 
 def get_specific_video(filter_params: Optional[dict]=None) -> Video:
     allowed_fields = ['id']
-    selectors.get_objects(Video, filter_params, allowed_fields).first()
+    return selectors.get_objects(Video, filter_params, allowed_fields).first()
     
 
 def get_specific_document(filter_params: Optional[dict]=None) -> Document:
     allowed_fields = ['id']
-    selectors.get_objects(Document, filter_params, allowed_fields).first()
+    return selectors.get_objects(Document, filter_params, allowed_fields).first()
 
 
 
-def get_video_documents(filter_params: Optional[dict]=None, extra_fields: list=[]):
+def get_lessons(filter_params: Optional[dict]=None, extra_fields: list=[]):
     allowed_fields = utils.get_model_field_names(VideoDocument, filter_params)
     allowed_fields += ['section__id']
     if not filter_params['section__id']:
@@ -99,5 +99,7 @@ def get_video_documents(filter_params: Optional[dict]=None, extra_fields: list=[
     
     # if filter_params['video__id'] or filter_params['document__id']:
     return selectors.get_objects(VideoDocument, filter_params, allowed_fields, extra_fields)
-    
     # raise exceptions.CustomException("Either provide a video or a section for this section item")
+
+def get_specific_lesson(lesson_id: int):
+    return selectors.get_specific_object(VideoDocument, lesson_id)

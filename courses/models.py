@@ -103,6 +103,7 @@ class Section(models.Model):
 
 
 class Video(models.Model):
+    thumbnail = models.ImageField(upload_to='thumbnails/', null=True)
     video_file = models.FileField(upload_to='videos/')
     hls_manifest = models.FileField(upload_to='hls/', blank=True, null=True)
     dash_manifest = models.FileField(upload_to='dash/', blank=True, null=True)

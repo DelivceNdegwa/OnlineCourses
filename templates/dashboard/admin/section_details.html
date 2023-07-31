@@ -31,10 +31,6 @@
                 </button>
             </div>
         </div>
-    {% else %}
-        <div class="col-9 mt-4">
-            <h4>{{ section.title }} content</h4>
-        </div>
     {% endif %}
     <div class="col-9">
       <table class="table">
@@ -53,11 +49,11 @@
             <th scope="row">{{ forloop.counter }}</th>
             <td>{{ lesson.title }}</td>
             <td class="text-end">
-              <a href="#" class="btn border-0 me-1">
+              <a 
+              href="{% url 'staff:admin_course_section_lesson_details' course_id=lesson.section.course.id section_id=lesson.section.id lesson_id=lesson.id %}" 
+              class="btn border-0 me-1"
+              >
                 <i class="fa fa-eye"></i>
-              </a>
-              <a href="#" class="btn border-0 ms-1">
-                <i class="fa fa-pencil"></i>
               </a>
             </td>
           </tr>
