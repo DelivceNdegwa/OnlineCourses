@@ -77,7 +77,7 @@ html {
 
 body{
     background-color: var(--primary-variant);
-    overflow: hidden;
+    overflow: auto;
 }
 
 .navbar-brand{
@@ -86,10 +86,15 @@ body{
     color: var(--secondary-color) !important;
     margin: 10px;
 }
+.dashboard-content{
+    position: absolute;
+}
+.sidebar{
+    position: fixed;
 
+}
 .sidebar, .dashboard-content{
     top: 0;
-    position: absolute;
 }
 
 .sidebar{
@@ -162,7 +167,12 @@ body{
     left: 20vw;
     bottom: 0;
     right: 0;
+    overflow: auto;
     /* width: calc(100vw - 250vw); */
+}
+
+.overflow-auto{
+    overflow: auto !important;
 }
 
 
@@ -204,6 +214,26 @@ input:focus{
     height: 24px;
     width: 24px;
 }
+/* VIDEO STYLING */
+.video-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    overflow: hidden;
+    border-radius: 10px !important;
+}
+
+#video-player {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px !important;
+} 
+
+#video-player source{
+    border-radius: 10px !important;
+}
+/* END VIDEO STYLING */
 
 @media (max-width:1200px) {
     .dashboard-content{

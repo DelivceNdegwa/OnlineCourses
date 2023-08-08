@@ -120,6 +120,8 @@ class Video(models.Model):
     
     def __str__(self):
         return str(self.video_file)
+    
+    
 
 
 class Document(models.Model):
@@ -136,7 +138,7 @@ class VideoDocument(models.Model):
     position = models.IntegerField(null=True, blank=True)
     
     def __str__(self):
-        return f"{self.position}:{self.title}"
+        return f"{self.position}:{self.title}:{self.id}"
 
 class Review(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)

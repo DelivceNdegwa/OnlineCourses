@@ -90,24 +90,5 @@
 {% include "components/update_current_section_modal.html" %}
 {% endblock %} 
 {% block js %}
-<script>
-  $(document).ready(function () {
-    function toggleSections() {
-      if ($("#videoRadio").prop("checked")) {
-        $("#document-section").hide();
-        $("#video-section").show();
-      } else if ($("#radioDocument").prop("checked")) {
-        $("#document-section").show();
-        $("#video-section").hide();
-      }
-    }
 
-    // Initial call to set visibility based on the default checked radio button
-    toggleSections();
-    // Attach a change event handler to the radio buttons
-    $("input[name=section_media_radio]").change(function() {
-      toggleSections();
-    });
-  });
-</script>
 {% endblock %}

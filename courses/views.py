@@ -200,32 +200,36 @@ def admin_course_section_details_update(request, course_id, section_id):
 
 @staff_member_required
 def admin_course_section_lesson_details(request, course_id, section_id, lesson_id):
-    print(lesson_id)
     lesson = selectors.get_specific_lesson(lesson_id)
     
-    print(f"VIDEO={lesson}, MANIFEST={lesson.title}")
     if request.method == "POST":
-        video_file = request.FILES.get("video_file")
-        document_file = request.FILES.get("document_file")
+        video_file = None#request.FILES.get("video_file")
+        document_file = None#request.FILES.get("document_file")
+        video_changed = request.POST.get("video-changed")
+        document_changed = request.POST.get("document-changed")
+        print("--HERE GOES--")
+        print(f"CHANGES {video_changed}, {document_changed}")
         title = request.POST.get("title")
-
-        if video_file and lesson.video:
+        
+        if video_changed == 'on' and video_file and lesson.video:
             video = selectors.get_specific_video({'id': lesson.video.id})
             if video.video_file is not video_file:
                 video.video_file = video_file
                 video.save()
-        if document_file and lesson.document:
+
+        if document_changed == 'on' and document_file and lesson.document:
             document = selectors.get_specific_document({'id': lesson.document.id})
             if document.document_file is not document_file:
                 document.document_file = document_file
                 document.save()
         
         if title is not lesson.title:
-            lesson.title = title
+            lesson.title=title
             lesson.save()
             
     context = {
-        "lesson": lesson
+        "lesson": lesson,
+        "section": lesson.section
     }   
     
     return render(request, "dashboard/admin/lesson_details.html", context)

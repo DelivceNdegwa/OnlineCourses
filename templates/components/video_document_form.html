@@ -1,6 +1,10 @@
 {% load static %}
 
-<form action="{% url 'staff:admin_course_section_details' course_id=section.course.id section_id=section.id %}" method="POST" enctype="multipart/form-data">
+{% if not lesson %}
+<form 
+    action="{% url 'staff:admin_course_section_details' course_id=section.course.id section_id=section.id %}" 
+    method="POST" enctype="multipart/form-data"
+>
     {% csrf_token %}
     <!-- title, video, document  -->
     <label for="title" class="mt-3">Title</label>
@@ -28,3 +32,32 @@
     </div>
     <button class="btn btn-custom-secondary w-100 mt-4">Upload</button>
 </form>
+{% else %}
+<form 
+    action="{% url 'staff:admin_course_section_lesson_details' course_id=section.course.id section_id=section.id lesson_id=lesson.id %}" 
+    method="POST" enctype="multipart/form-data"
+>
+    {% csrf_token %}
+    <!-- title, video, document  -->
+    <label for="title" class="mt-3">Title</label>
+    <input name="title" value="{{ lesson.title }}" class="form-control mt-2">
+    
+    {% if lesson.document %}
+        <div class="mt-3" id="document-section" class="d-none">
+            <label for="document">Document</label>
+            <input id="document-input" class="form-control mt-2" type="file" accept=".pdf, .docx, .xls" name="document_file">
+            <small class="text-secondary">Current: {{ lesson.document }}</small>
+        </div>
+        <input type="checkbox" name="document-changed" id="document-changed" class="d-none">
+    {% endif %}
+    {% if lesson.video %}
+        <div class="mt-3" id="video-section" class="d-none">
+            <label for="video">Video</label>
+            <input id="video-input" class="form-control mt-2" type="file" accept=".mp4, .webm, .ogg" name="video_file">
+            <small class="text-secondary">Current: {{ lesson.video }}</small>
+        </div>
+        <input type="checkbox" name="video-changed" id="video-changed" class="d-none">
+    {% endif %}
+    <button class="btn btn-custom-secondary w-100 mt-4">Upload</button>
+</form>
+{% endif %}
