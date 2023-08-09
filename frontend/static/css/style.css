@@ -30,8 +30,8 @@
 }
 
 body{
-    background-color: var(--primary-color) !important;
-    color: var(--primary-variant) !important;
+    background-color: var(--primary-variant) !important;
+    color: var(--primary-color) !important;
     min-height: 100vh;
     max-width: 100% !important;
     min-width: 370px !important;
@@ -53,7 +53,8 @@ img{
 
 /* NAV BEGINNING */
 .navbar{
-    margin-top: 2rem !important;
+    padding-top: 2rem !important;
+    background-color: var(--primary-color);
 }
 
 .navbar-brand{
@@ -262,6 +263,15 @@ input:focus{
 .courses-section-categories{
     margin-top: 0px !important;
 }
+.banner-image{
+    max-height: 350px !important;
+}
+
+/* @media (max-height:1200px){
+    .banner-image{
+        max-height: 250px !important;
+    }
+} */
 
 @media (min-width:1115px) and (max-width:1200px){
     /* Buttons */

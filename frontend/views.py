@@ -1,11 +1,22 @@
 from django.shortcuts import render
-from courses.models import Category
+from courses import selectors
 
 def index(request):
     
-    categories = Category.objects.all()
+    categories = selectors.get_categories()
+    courses = selectors.get_courses()
     context = {
-        "categories": categories
+        "categories": categories,
+        "courses": courses
     }
     
     return render(request, "frontend/index.html", context)
+
+def categories(request):
+    categories = selectors.get_categories()
+
+    context = {
+        "categories": categories
+    }
+
+    return render(request, "frontend/categories.html", context)

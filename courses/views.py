@@ -233,4 +233,4 @@ def admin_course_section_lesson_details(request, course_id, section_id, lesson_i
     }   
     
     return render(request, "dashboard/admin/lesson_details.html", context)
-    
+
