@@ -6,6 +6,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 from courses import selectors, services
 from courses.models import Video
+from courses.tasks import generate_dash_files
 from staff import forms
 
 
@@ -159,8 +160,10 @@ def admin_course_section_details(request, course_id, section_id):
                 section_id=section.id,
                 video_id=video.id
             )
-            # Create a background task for this
-            video.generate_dash()
+            # TODO: Create a background task for this
+            # video.generate_dash()
+            generate_dash_files.delay(video)
+            return JsonResponse(data={"message": "Video is being processed"})
             
         if media_choice == "document":
             document_file = request.FILES.get("document_file")
