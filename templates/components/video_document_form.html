@@ -3,7 +3,7 @@
 {% if not lesson %}
 <form 
     action="{% url 'staff:admin_course_section_details' course_id=section.course.id section_id=section.id %}" 
-    method="POST" enctype="multipart/form-data"
+    method="POST" enctype="multipart/form-data" id="lesson-form"
 >
     {% csrf_token %}
     <!-- title, video, document  -->
@@ -30,12 +30,12 @@
         <label for="video">Video</label>
         <input class="form-control mt-2" type="file" accept=".mp4, .webm, .ogg" name="video_file">
     </div>
-    <button class="btn btn-custom-secondary w-100 mt-4">Upload</button>
+    <button class="btn btn-custom-secondary w-100 mt-4" id="btn-upload-lesson" type="submit">Upload</button>
 </form>
 {% else %}
 <form 
     action="{% url 'staff:admin_course_section_lesson_details' course_id=section.course.id section_id=section.id lesson_id=lesson.id %}" 
-    method="POST" enctype="multipart/form-data"
+    method="POST" enctype="multipart/form-data" id="lesson-form"
 >
     {% csrf_token %}
     <!-- title, video, document  -->
@@ -58,6 +58,6 @@
         </div>
         <input type="checkbox" name="video-changed" id="video-changed" class="d-none">
     {% endif %}
-    <button class="btn btn-custom-secondary w-100 mt-4">Upload</button>
+    <button class="btn btn-custom-secondary w-100 mt-4" class="btn-upload-lesson" type="submit">Upload</button>
 </form>
 {% endif %}

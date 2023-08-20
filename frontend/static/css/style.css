@@ -46,6 +46,11 @@ img{
     color: var(--primary-variant) !important;
 }
 
+.bg-custom-primary-variant{
+    background-color: var(--primary-variant) !important;
+    color: var(--primary-color) !important;
+}
+
 .bg-custom-secondary{
     background-color: var(--secondary-color) !important;
     color: var(--primary-color) !important;
@@ -211,7 +216,7 @@ select{
     background-image: url('../images/search-icon-green.png');
     background-repeat: no-repeat;
     background-position: 5px center;
-    background-color: var(--primary-color) !important;
+    background-color: transparent !important;
     padding-top:8px;
     padding-bottom: 8px;
     font-size: 1.1rem;

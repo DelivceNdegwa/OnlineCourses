@@ -68,6 +68,60 @@
               $("input[name=section_media_radio]").change(function() {
                 toggleSections();
               });
+
+              $("#lesson-form").submit(function(e){
+                  e.preventDefault();
+                  let formUrl = $(this).attr("action");
+
+                  let lessonForm = this;
+
+                  $('#btn-upload-lesson').prop('disabled', true)
+                  $('#btn-upload-lesson').html(
+                    `
+                      <i class="fa fa-spinner fa-spin mx-2" style="font-size:24px"></i>
+                      <span>Submitting</span>
+                    `
+                  )
+
+                  let formData = new FormData(this);
+                  $.ajax({
+                    type: 'POST',
+                    url: formUrl,
+                    data: formData,
+                    processData: false,  // Prevent jQuery from processing the data
+                    contentType: false,  // Set content type to false as FormData handles it
+                    success: function(response) {
+                      let alertType = 'danger';
+                      if(response.success == true){
+                        alertType = 'success'
+                      }
+                      $('#btn-upload-lesson').html(
+                        `
+                          <i class="fa fa-check-circle mx-2" style="font-size:24px"></i>
+                          <span>Form submitted</span>
+                        `
+                      )
+
+                      setTimeout(function(){
+                        lessonForm.reset();
+                        $('#creationSectionContentModal').modal('hide');
+                        $('#alert-space').html(
+                          `
+                          <div class="alert alert-${alertType} alert-dismissible" role="alert">
+                            <div>${response.message}</div>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                          </div>
+                          `
+                        
+                        );
+                      }, 1000);
+                    },
+                    error: function(error) {
+                      console.log('Error submitting form')
+                      $('#message').text('Error submitting form.');
+                    }
+                });
+              });
             });
         </script>
         {% block js %}{% endblock %}

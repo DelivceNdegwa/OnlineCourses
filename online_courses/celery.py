@@ -12,5 +12,9 @@ app = Celery('online_courses')
 # Load task modules from all registered Django app configs.
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
+app.conf.enable_utc = False
+
+app.conf.update(timezone = 'EAT')
+
 # Auto-discover tasks in all installed apps.
 app.autodiscover_tasks()

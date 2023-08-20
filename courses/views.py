@@ -162,8 +162,8 @@ def admin_course_section_details(request, course_id, section_id):
             )
             # TODO: Create a background task for this
             # video.generate_dash()
-            generate_dash_files.delay(video)
-            return JsonResponse(data={"message": "Video is being processed"})
+            generate_dash_files.delay(video.id)
+            return JsonResponse(data={"message": "Video is being processed", "success": True})
             
         if media_choice == "document":
             document_file = request.FILES.get("document_file")

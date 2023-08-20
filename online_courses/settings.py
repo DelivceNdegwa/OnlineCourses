@@ -30,6 +30,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,7 +45,8 @@ INSTALLED_APPS = [
     'users',
     'staff',
     
-    'widget_tweaks'
+    'widget_tweaks',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +60,14 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'online_courses.urls'
+
+# CELERY SETTINGS
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_ACCEPT_CONTENT = {'application/json'}
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'EAT'
+CELERY_RESULT_BACKEND = 'django-db'
 
 TEMPLATES = [
     {
@@ -77,8 +87,8 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = 'online_courses.asgi.application'
 WSGI_APPLICATION = 'online_courses.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
