@@ -126,7 +126,7 @@ def create_subscription(
         # "subscription_type": subscription_type,
         "payment_status": constants.PENDING
     }
-    
+    print(f"PAYMENT METHOD= {payment_method}")
     subscription = Subscription.objects.filter(**subscription_filter).first()
     if not subscription:
         subscription = Subscription.objects.create(

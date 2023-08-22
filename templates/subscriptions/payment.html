@@ -3,5 +3,24 @@
 
 
 {% block content %}
-    <h1>SUBSCRIPTION={{ subscription }}</h1>
+    <h1 class="h3">Subscription for {{ subscription.course.title }}</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <form action="{% url 'subscriptions:pay-subscription' subscription.id %}" method="POST"></form>
+                {% if subscription.payment_method == "mpesa" %}
+                    <!-- Mpesa implementation here -->
+                    <div class="text-center">
+                        <img src="{% static 'images/mpesa-logo.png' %}" alt="Mpesa Payment">   
+                        <label for="phone-number" class="mt-3"><b>Phone number</b></label>
+                        <input type="phone" class="form-control" placeholder="07XXXXXXXX">
+                    </div>
+                {% else %}
+                    <!-- Paypal implementation form -->
+                {% endif %}
+                <button type="submit" class="btn-custom-primary d-block">Create request</button>
+            </form>
+        </div>
+    </div>
+
 {% endblock %}

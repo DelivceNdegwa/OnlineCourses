@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
@@ -79,6 +80,8 @@ class Course(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="courses")
     description = models.TextField()
     number_of_students = models.IntegerField(default=0)
+    monthly_price = models.DecimalField(default=0, max_digits=10, decimal_places=2)
+    one_time_price = models.DecimalField(default=0, max_digits=10, decimal_places=2)
 
     def __str__(self):
         return self.title
@@ -88,7 +91,7 @@ class CourseStudent(models.Model):
     course = models.ForeignKey(Course, on_delete=models.PROTECT)
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     active = models.BooleanField(default=False)
-    
+
     def __str__(self):
         return f"{self.student.username}:{self.course.title}"
 
@@ -213,7 +216,7 @@ class Subscription(models.Model):
     
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    payment_method = models.CharField(max_length=100, choices=SUBSCRIPTION_CHOICES, default=constants.MPESA, null=True, blank=True)
+    payment_method = models.CharField(max_length=100, choices=PAYMENT_METHOD, default=constants.MPESA, null=True, blank=True)
     subscription_type = models.CharField(max_length=100, choices=SUBSCRIPTION_CHOICES, default=constants.MONTHLY, null=True, blank=True)  # One-time or Monthly
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)

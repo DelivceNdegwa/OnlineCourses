@@ -49,7 +49,7 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="payment-choice" id="mpesa-payment">
+                                            <input class="form-check-input" type="radio" name="payment-choice" id="mpesa-payment" value="mpesa">
                                             <label class="form-check-label" for="mpesa-payment">
                                               M-Pesa
                                             </label>
@@ -65,7 +65,7 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="payment-choice" id="paypal-payment">
+                                            <input class="form-check-input" type="radio" name="payment-choice" id="paypal-payment" value="paypal">
                                             <label class="form-check-label" for="paypal-payment">
                                               Paypal
                                             </label>
@@ -81,7 +81,14 @@
                             <div class="col-12">
                                 <!-- One time -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="subscription-type" id="onetime-subscription">
+                                    <input
+                                        class="form-check-input"
+                                        type="radio"
+                                        name="subscription-type"
+                                        id="onetime-subscription"
+                                        value="one_time"
+                                        data-price="{{ course.one_time_price }}"
+                                    >
                                     <label class="form-check-label" for="onetime-subscription">
                                       One time
                                     </label>
@@ -90,13 +97,26 @@
                             <div class="col-12">
                                 <!-- Monthly -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="subscription-type" id="monthly-subscription">
+                                    <input
+                                        class="form-check-input"
+                                        type="radio"
+                                        name="subscription-type"
+                                        id="monthly-subscription"
+                                        value="monthly"
+                                        data-price="{{ course.monthly_price }}"
+                                    >
                                     <label class="form-check-label" for="monthly-subscription">
-                                      Monthly
+                                        Monthly
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-12 mt-4 mb-2">
+                            <div class="col-12 mt-4">
+                                <p class="h4 d-flex justify-content-between mx-2">
+                                    <span>PRICE</span>
+                                    <span>KES: 5000</span>
+                                </p>
+                            </div>
+                            <div class="col-12 mt-2 mb-2">
                                 <button class="btn-custom-primary w-100 text-center">
                                     Submit
                                 </button>
