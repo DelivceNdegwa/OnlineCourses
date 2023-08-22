@@ -1,5 +1,6 @@
-from typing import Optional
+from typing import Optional, Any
 from django.db.models import Count
+from django.contrib.auth import get_user_model
 from base import selectors, exceptions, utils
 from courses.models import (
     SystemSettings,
@@ -9,8 +10,11 @@ from courses.models import (
     Section,
     Video,
     Document,
-    VideoDocument
+    VideoDocument,
 )
+
+
+User = get_user_model()
 
 
 # System Settings
@@ -26,10 +30,18 @@ def get_categories(filter_params: Optional[dict]=None):
 def get_specific_category(id: int) -> Category:
     return selectors.get_specific_object(Category, id)
 
+
 # Courses
 def get_courses(filter_params: Optional[dict]=None):
     allowed_fields = utils.get_model_field_names(Course)
     return selectors.get_objects(Course, filter_params, allowed_fields)
+
+def get_category_courses(category_id: int) -> Any:
+    try:
+        category = Category.objects.prefetch_related('courses').get(id=category_id)
+        return category.courses.all()
+    except Category.DoesNotExist as exc:
+        raise exceptions.CustomException(exc)
 
 
 def get_specific_course(id: int) -> Course:
@@ -57,13 +69,21 @@ def get_course_students(filter_params: Optional[dict]):
 def get_courses_with_active_students():
     return Course.objects.filter(coursestudent__active=True).annotate(num_active_students=Count('coursestudent__student'))
 
-
-def get_specific_section(section_id):
-    return selectors.get_specific_object(Section, section_id)
-
+# Sections
 def get_sections(filter_params: Optional[dict]=None) -> Section:
     allowed_fields = ['id', 'course__id']
     selectors.get_objects(Section, filter_params, allowed_fields)
+
+def get_course_sections(course_id: int) -> Any:
+    try:
+        course = Course.objects.prefetch_related('sections').get(id=course_id)
+        return course.sections.all()
+    except Course.DoesNotExist as exc:
+        raise exceptions.CustomException(exc)
+
+
+def get_specific_section(section_id):
+    return selectors.get_specific_object(Section, section_id)
 
 
 def get_section_videos(filter_params: Optional[dict]=None):
@@ -90,7 +110,7 @@ def get_specific_document(filter_params: Optional[dict]=None) -> Document:
     return selectors.get_objects(Document, filter_params, allowed_fields).first()
 
 
-
+# Lessons
 def get_lessons(filter_params: Optional[dict]=None, extra_fields: list=[]):
     allowed_fields = utils.get_model_field_names(VideoDocument, filter_params)
     allowed_fields += ['section__id']
@@ -101,5 +121,24 @@ def get_lessons(filter_params: Optional[dict]=None, extra_fields: list=[]):
     return selectors.get_objects(VideoDocument, filter_params, allowed_fields, extra_fields)
     # raise exceptions.CustomException("Either provide a video or a section for this section item")
 
+def get_section_lessons(section_id: int) -> Any:
+    try:
+        section = Section.objects.prefetch_related('lessons').get(id=section_id)
+        return section.lessons.all()
+    except Section.DoesNotExist as exc:
+        raise exceptions.CustomException(exc)
+
+
 def get_specific_lesson(lesson_id: int):
     return selectors.get_specific_object(VideoDocument, lesson_id)
+
+def get_all_users() -> Any:
+    return User.objects.all()
+
+def get_specific_user(user_id: int) -> User:
+    try:
+        user = selectors.get_specific_object(User, user_id)
+        return user
+    except User.DoesNotExist as exc:
+        raise exceptions.CustomException(exc)
+    

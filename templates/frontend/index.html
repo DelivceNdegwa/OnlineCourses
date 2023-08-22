@@ -72,10 +72,12 @@
         </div>
         <div class="col-12 mt-0 p-0">
             <div class="row courses-section-categories mt-3 mx-3">
-                <div class="col-sm-10 col-md-3 col-lg-2 m-2"></div>
-                    <div class="owl-carousel owl-theme">
+                <div class="col-sm-10 col-md-3 col-lg-2 m-2 h-100"></div>
+                    <div class="owl-carousel owl-theme h-100">
                         {% for course in courses %}
-                            {% include "components/course_card.html" %} 
+                            {% if course.sections.count > 0 %}
+                                {% include "components/course_card.html" %} 
+                            {% endif %}
                         {% endfor %}
                     </div>
                 </div>

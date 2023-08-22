@@ -1,5 +1,13 @@
-<div class="card item m-1">
-    <div class="card-body">
-        <p>{{ course.title }}</p>
+{% if course.thumbnail_image %}
+    <div class="card item m-1 h-100 border-0 shadow-sm bg-custom-primary-variant">
+        <img src="{{ course.thumbnail_image.url }}" class="card-img-top" alt="{{ course.title }}">
+        <div class="card-body h-100">
+            <h5 class="card-title text-custom-primary">{{ course.title }}</h5>
+            <p class="card-text">{{ course.description|truncatewords:4  }}</p>
+            <small class="text-secondary">In {{ course.category.name }}</small>
+            <div class="text-end">
+                <a href="{% url 'frontend:course-details' category_id=course.category.id course_id=course.id %}" class="btn btn-custom-secondary">View course</a>
+            </div>
+        </div>
     </div>
-</div>
+{% endif %}

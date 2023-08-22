@@ -1,6 +1,6 @@
 from django.db import transaction
 
-from courses.models import SystemSettings, Category, Section, VideoDocument, Video, Document
+from courses.models import SystemSettings, Category, Section, VideoDocument, Video, Document, Subscription
 from courses import selectors
 from base import exceptions
 
@@ -87,7 +87,7 @@ def create_section_item(
         return video_doc
     return existing_item.first()
 
-
+@transaction.atomic
 def create_lesson_video(video):
     # exists = Video.objects.filter(video_file=video)
     # if not exists:
@@ -95,7 +95,7 @@ def create_lesson_video(video):
     # return exists
     return Video.objects.create(video_file=video)
 
-
+@transaction.atomic
 def create_lesson_document(document):
     # exists = Document.objects.filter(document_file=document)
     # if not exists:
@@ -107,3 +107,23 @@ def create_lesson_document(document):
         return doc
     except Exception as e:
         raise exceptions.CustomException(f"Instance not created {e}")
+
+@transaction.atomic
+def create_subscription(
+    *,
+    student_id,
+    course_id,
+    payment_method,
+    subscription_type,
+    start_date):
+    student = selectors.get_specific_user(student_id)
+    course = selectors.get_specific_course(course_id)
+
+
+    subscription = Subscription.objects.create(
+        student=student,
+        course=course,
+        payment_method=payment_method,
+        subscription_type=subscription_type,
+    )
+    return subscription

@@ -76,7 +76,7 @@ class Course(models.Model):
     title = models.CharField(max_length=100)
     thumbnail_image = models.ImageField(upload_to="courses/", null=True)
     instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE, null=True, blank=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="courses")
     description = models.TextField()
     number_of_students = models.IntegerField(default=0)
 
@@ -96,7 +96,7 @@ class CourseStudent(models.Model):
 
 class Section(models.Model):
     title = models.CharField(max_length=100)
-    course = models.ForeignKey(Course, on_delete=models.PROTECT)
+    course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name="sections")
 
     def __str__(self):
         return self.title
@@ -132,7 +132,7 @@ class Document(models.Model):
 
 class VideoDocument(models.Model):
     title = models.CharField(max_length=100)
-    section = models.ForeignKey(Section, on_delete=models.PROTECT, null=True)
+    section = models.ForeignKey(Section, on_delete=models.PROTECT, null=True, related_name="lessons")
     video = models.ForeignKey(Video, on_delete=models.CASCADE, null=True, blank=True)
     document = models.ForeignKey(Document, on_delete=models.CASCADE, null=True, blank=True)
     position = models.IntegerField(null=True, blank=True)
@@ -141,8 +141,8 @@ class VideoDocument(models.Model):
         return f"{self.position}:{self.title}:{self.id}"
 
 class Review(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="reviews")
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reviews")
     rating = models.IntegerField()
     comments = models.TextField()
 
@@ -151,8 +151,8 @@ class Review(models.Model):
 
 
 class Question(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="questions")
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name="questions")
     question_text = models.TextField()
 
     def __str__(self):
@@ -160,8 +160,8 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    instructor = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="answers")
+    instructor = models.ForeignKey(User, on_delete=models.CASCADE, related_name="answers")
     answer_text = models.TextField()
 
     def __str__(self):
@@ -169,7 +169,7 @@ class Answer(models.Model):
 
 
 class Bookmark(models.Model):
-    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bookmarks")
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -208,11 +208,11 @@ class Subscription(models.Model):
     
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    payment_method = models.CharField(max_length=100, choices=SUBSCRIPTION_CHOICES, default=constants.MPESA)
-    subscription_type = models.CharField(max_length=100, choices=SUBSCRIPTION_CHOICES, default=constants.MONTHLY)  # One-time or Monthly
-    start_date = models.DateField()
+    payment_method = models.CharField(max_length=100, choices=SUBSCRIPTION_CHOICES, default=constants.MPESA, null=True, blank=True)
+    subscription_type = models.CharField(max_length=100, choices=SUBSCRIPTION_CHOICES, default=constants.MONTHLY, null=True, blank=True)  # One-time or Monthly
+    start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
-
+    
     def __str__(self):
         return f"Subscription for {self.course}"
 

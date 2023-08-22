@@ -1,0 +1,44 @@
+{% extends "basefiles/base.html" %}
+{% load static %}
+
+{% block title %}{{ course.title }}{% endblock %}
+
+{% block css %}
+<style>
+    .btn-purchase{
+        border: none !important;
+        border-radius: 3px !important;
+        color: var(--primary-variant) !important;
+    }
+    .btn-purchase:hover{
+        color: var(--primary-variant) !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="text-custom-primary text-center mt-3">{{ course.title }}</h1>
+        <h2 class="h4 text-center">What you are going to learn</h2>
+        <div class="row justify-content-center mt-4">
+            <div class="col-10">
+                <div class="row justify-content-between">
+                    <div class="col-4 text-start">
+                        <h4>{{ course.sections.count }} section{% if course.sections.count != 1 %}s{% endif %}</h4>
+                    </div>
+                    <div class="col-4 text-end">
+                        <div class="btn-custom-secondary btn-purchase">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span class="ms-2" style="font-weight: 600;">Subscribe</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-10 mt-3">
+                {% for section in course.sections.all %}
+                    {% include "components/course-dropdown.html" %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
