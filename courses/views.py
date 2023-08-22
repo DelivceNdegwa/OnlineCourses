@@ -56,12 +56,9 @@ def admin_course_details(request, course_id):
     form = forms.SectionForm()
     course = selectors.get_specific_course(course_id)
     course_form = forms.CourseForm(instance=course)
-    filter_by_course_id = {
-        "course__id": course_id
-    }
     message = ""
     success = False
-    course_sections = selectors.get_course_sections(filter_by_course_id, extra_fields=['course__id'])
+    course_sections = selectors.get_course_sections(course_id)
     paginator = Paginator(course_sections, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

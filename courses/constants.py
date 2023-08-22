@@ -6,6 +6,9 @@ HLS = "hls"
 MPESA = "mpesa"
 PAYPAL= "paypal"
 
+COMPLETED="completed"
+PENDING="pending"
+
 MONTHLY = "monthly"
 ONETIME = "one_time"
 

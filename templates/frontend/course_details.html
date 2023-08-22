@@ -27,10 +27,26 @@
                         <h4>{{ course.sections.count }} section{% if course.sections.count != 1 %}s{% endif %}</h4>
                     </div>
                     <div class="col-4 text-end">
-                        <div class="btn-custom-secondary btn-purchase">
-                            <i class="fa fa-shopping-cart"></i>
-                            <span class="ms-2" style="font-weight: 600;">Subscribe</span>
-                        </div>
+                        {% if not request.user.is_authenticated %}
+                            <a
+                                href="{% url 'users:login' %}"
+                                class="btn-custom-secondary btn-purchase"
+                                type="button"
+                            >
+                                <i class="fa fa-shopping-cart"></i>
+                                <span class="ms-2" style="font-weight: 600;">Subscribe</span>
+                            </a>
+                        {% else %}
+                            <button 
+                                class="btn-custom-secondary btn-purchase"
+                                type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#subscription"
+                            >
+                                <i class="fa fa-shopping-cart"></i>
+                                <span class="ms-2" style="font-weight: 600;">Subscribe</span>
+                            </button>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -41,4 +57,5 @@
             </div>
         </div>
     </div>
+    {% include "components/subscription_modal.html" %}
 {% endblock %}

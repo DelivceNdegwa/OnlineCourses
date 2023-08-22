@@ -11,6 +11,7 @@ from courses.models import (
     Video,
     Document,
     VideoDocument,
+    Subscription
 )
 
 
@@ -48,15 +49,15 @@ def get_specific_course(id: int) -> Course:
     return selectors.get_specific_object(Course, id)
 
 
-def get_course_sections(filter_params: Optional[dict]=None, extra_fields: list=[]):
-    allowed_fields = utils.get_model_field_names(Section)
+# def get_course_sections(filter_params: Optional[dict]=None, extra_fields: list=[]):
+#     allowed_fields = utils.get_model_field_names(Section)
     
-    if extra_fields:
-        allowed_fields += extra_fields
+#     if extra_fields:
+#         allowed_fields += extra_fields
 
-    if not filter_params['course__id']:
-        raise exceptions.CustomException("Please provide a course")
-    return selectors.get_objects(Section, filter_params, allowed_fields, extra_fields)
+#     if not filter_params['course__id']:
+#         raise exceptions.CustomException("Please provide a course")
+#     return selectors.get_objects(Section, filter_params, allowed_fields, extra_fields)
 
 
 def get_course_students(filter_params: Optional[dict]):
@@ -141,4 +142,14 @@ def get_specific_user(user_id: int) -> User:
         return user
     except User.DoesNotExist as exc:
         raise exceptions.CustomException(exc)
-    
+
+def get_all_subscriptions(filter_params: Optional[dict]=None, extra_fields: list=[]) -> Any:
+    allowed_fields = utils.get_model_field_names(VideoDocument, filter_params)
+    return selectors.get_objects(Video, filter_params, allowed_fields)
+
+def get_specific_subscription(subscription_id: int) -> Subscription:
+    try:
+        subscription = selectors.get_specific_object(Subscription, subscription_id)
+        return subscription
+    except Subscription.DoesNotExist as exc:
+        raise exceptions.CustomException(exc)

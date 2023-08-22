@@ -27,6 +27,7 @@ urlpatterns = [
     path('auth/', include('users.urls')),
     path('customer/', include('customer.urls')),
     path('shuhuri_admin/', include('staff.urls')),
+    path('subscription/', include('subscriptions.urls'))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

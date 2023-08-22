@@ -206,12 +206,18 @@ class Subscription(models.Model):
         (constants.PAYPAL, 'Paypal')
     )
     
+    PAYMENT_STATUS = (
+        (constants.PENDING, "Pending"),
+        (constants.COMPLETED, "Completed")
+    )
+    
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     payment_method = models.CharField(max_length=100, choices=SUBSCRIPTION_CHOICES, default=constants.MPESA, null=True, blank=True)
     subscription_type = models.CharField(max_length=100, choices=SUBSCRIPTION_CHOICES, default=constants.MONTHLY, null=True, blank=True)  # One-time or Monthly
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
+    payment_status = models.CharField(choices=PAYMENT_STATUS, max_length=20, default=constants.PENDING)
     
     def __str__(self):
         return f"Subscription for {self.course}"

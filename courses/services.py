@@ -1,7 +1,7 @@
 from django.db import transaction
 
 from courses.models import SystemSettings, Category, Section, VideoDocument, Video, Document, Subscription
-from courses import selectors
+from courses import selectors, constants
 from base import exceptions
 
 
@@ -115,15 +115,25 @@ def create_subscription(
     course_id,
     payment_method,
     subscription_type,
-    start_date):
+    start_date=None):
     student = selectors.get_specific_user(student_id)
     course = selectors.get_specific_course(course_id)
 
-
-    subscription = Subscription.objects.create(
-        student=student,
-        course=course,
-        payment_method=payment_method,
-        subscription_type=subscription_type,
-    )
+    subscription_filter = {
+        "student__id": student_id,
+        "course__id": course_id,
+        # "payment_method": payment_method,
+        # "subscription_type": subscription_type,
+        "payment_status": constants.PENDING
+    }
+    
+    subscription = Subscription.objects.filter(**subscription_filter).first()
+    if not subscription:
+        subscription = Subscription.objects.create(
+            student=student,
+            course=course,
+            payment_method=payment_method,
+            subscription_type=subscription_type,
+            start_date=start_date
+        )
     return subscription

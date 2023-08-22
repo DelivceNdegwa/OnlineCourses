@@ -2,7 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap');
 
 :root{
-    --primary-color: rgb(23, 23, 23);
+    --primary-color: rgb(23, 26, 23);
+    --primary-color-lighter: rgb(43, 46, 43);
+    --primary-color-darker: rgb(3, 6, 3);
     --secondary-color: #3da700;/*#44b901;#5ada10*/
     --secondary-color-brighter:#4dd100;
     --primary-variant: #EBEBEB;
@@ -166,10 +168,14 @@ img{
     color: var(--primary-color) !important;
 }
 
-.btn-custom-primary-variant, .btn-custom-primary:hover{
+.btn-custom-primary-variant{
     color: var(--primary-color) !important;
     background-color: var(--primary-variant) !important;
     border: 2px solid var(--primary-color) !important;
+}
+
+.btn-custom-primary:hover{
+    background-color: var(--primary-color-darker) !important;
 }
 
 .btn-custom-primary, .btn-custom-primary-variant:hover{
