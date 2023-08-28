@@ -102,7 +102,6 @@ class CourseStudent(models.Model):
         return f"{self.student.username}:{self.course.title}"
 
 
-
 class Section(models.Model):
     title = models.CharField(max_length=100)
     course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name="sections")

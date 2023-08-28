@@ -45,3 +45,21 @@ def student_learning(request):
         "subscriptions": student_courses
     }
     return render(request, "dashboard/customer/my_learning.html", context)
+
+
+''' 
+    TODO 
+    - Create a decorator to verify that a user is logged in and they have subscribed to the course
+    - We can name it @is_subscribed
+'''
+@login_required
+def course_lesson_session(request, course_id, section_id, lesson_id):
+    lesson = selectors.get_specific_lesson(lesson_id)
+    course = selectors.get_specific_course(course_id)
+
+    context = {
+        "lesson": lesson,
+        "course": course
+    }
+
+    return render(request, "dashboard/customer/student_course_session.html", context)

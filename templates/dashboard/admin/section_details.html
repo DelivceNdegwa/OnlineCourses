@@ -48,18 +48,18 @@
         </thead>
         <tbody>
           {% for lesson in section_items %}
-          <tr>
-            <th scope="row">{{ forloop.counter }}</th>
-            <td>{{ lesson.title }}</td>
-            <td class="text-end">
-              <a 
-              href="{% url 'staff:admin_course_section_lesson_details' course_id=lesson.section.course.id section_id=lesson.section.id lesson_id=lesson.id %}" 
-              class="btn border-0 me-1"
-              >
-                <i class="fa fa-eye"></i>
-              </a>
-            </td>
-          </tr>
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{ lesson.title }}</td>
+              <td class="text-end">
+                <a 
+                href="{% url 'staff:admin_course_section_lesson_details' course_id=lesson.section.course.id section_id=lesson.section.id lesson_id=lesson.id %}" 
+                class="btn border-0 me-1"
+                >
+                  <i class="fa fa-eye"></i>
+                </a>
+              </td>
+            </tr>
           {% endfor %}
         </tbody>
       </table>

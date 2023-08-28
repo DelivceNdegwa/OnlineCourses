@@ -1,0 +1,26 @@
+{% if student_course.course.thumbnail_image %}
+    <div class="card item m-1 h-100 border-0 shadow-sm bg-custom-primary-variant">
+        <img src="{{ student_course.course.thumbnail_image.url }}" class="card-img-top" alt="{{ student_course.course.title }}">
+        <div class="card-body h-100">
+            <h5 class="card-title text-custom-primary">{{ student_course.course.title }}</h5>
+            <p class="card-text">{{ student_course.course.description|truncatewords:4  }}</p>
+            <small class="text-secondary">
+                {% if student_course.active %}
+                    <div class="text-danger"><b>Pending</b></div>
+                {% else %}
+                    <div class="text-custom-secondary-brighter">
+                        <b>active</b>
+                    </div>
+                {% endif %}
+            </small>
+            <div class="text-end">
+                <a 
+                    href="{% url 'customer:course-lesson-session' course_id=student_course.course.id section_id=1 lesson_id=1 %}" 
+                    class="btn btn-custom-secondary"
+                >
+                    Go to learning
+                </a>
+            </div>
+        </div>
+    </div>
+{% endif %}

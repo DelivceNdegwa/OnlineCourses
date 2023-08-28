@@ -131,10 +131,22 @@ def get_section_lessons(section_id: int) -> Any:
 
 
 def get_specific_lesson(lesson_id: int):
+    """
+        Used to get an instance of VideoDocument, which stores lessons
+        Needs only one argument, that is the lesson_id, which will be an ID of a Video Document instance
+
+        Example: 
+            from course import selectors
+            
+            test_id = 10\n
+            lesson = selectors.get_specific_lesson(test_id)
+    """
     return selectors.get_specific_object(VideoDocument, lesson_id)
+
 
 def get_all_users() -> Any:
     return User.objects.all()
+
 
 def get_specific_user(user_id: int) -> User:
     try:
@@ -143,6 +155,7 @@ def get_specific_user(user_id: int) -> User:
     except User.DoesNotExist as exc:
         raise exceptions.CustomException(exc)
 
+
 def get_all_subscriptions(filter_params: Optional[dict]=None, extra_fields = None) -> Any:
     allowed_fields = utils.get_model_field_names(Subscription, filter_params)
 
@@ -150,6 +163,7 @@ def get_all_subscriptions(filter_params: Optional[dict]=None, extra_fields = Non
         allowed_fields += extra_fields
 
     return selectors.get_objects(Video, filter_params, allowed_fields)
+
 
 def get_specific_subscription(subscription_id: int) -> Subscription:
     try:

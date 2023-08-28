@@ -1,15 +1,14 @@
 {% load static %}
 
-<p class="d-none">Lesson will be here hapa {{ lesson.video.dash_manifest }}</p>
 <div class="video-container rounded">
     <video
         id="video-player"
-        poster="https://media.vimejs.com/poster.png"
+        poster="/{{ lesson.video.thumbnail }}"
         class="shadow-lg rounded"
         controls
     >
         <source 
-            src="http://127.0.0.1:8000/media/dash/7/manifest.mpd"
+            src="/{{ lesson.video.dash_manifest }}"
             type="application/dash+xml"
         >
     </video>

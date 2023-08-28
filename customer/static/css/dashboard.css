@@ -71,6 +71,24 @@
     color: var(--primary-color) !important;
 }
 
+/* TEXT */
+.title-font{
+    font-size: 1.6rem;
+    font-weight: var(--title-weight)
+}
+
+.text-custom-primary{
+    color: var(--primary-color)!important;
+}
+
+.text-custom-secondary{
+    color: var(--secondary-color) !important;
+}
+
+.text-custom-secondary-brighter{
+    color: var(--secondary-color-brighter) !important;
+}
+
 html {
     overflow: hidden;
 }
@@ -91,7 +109,6 @@ body{
 }
 .sidebar{
     position: fixed;
-
 }
 .sidebar, .dashboard-content{
     top: 0;

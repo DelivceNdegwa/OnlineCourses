@@ -1,0 +1,14 @@
+{% extends "basefiles/dashboard.html" %}
+{% block content %}
+    <div class="row justify-content-between overflow-auto my-3 py-3">
+        <div class="col-sm-11 col-md-11 col-7">
+            {% include "components/video_player.html" %}
+        </div>
+        <div class="col-sm-11 col-md-11 col-5 bg-dark">
+            <!-- Lesson sections -->
+            {% for section in course.sections.all %}
+                {% include "dashboard/components/course-dropdown.html" %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
