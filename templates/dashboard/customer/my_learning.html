@@ -2,8 +2,9 @@
 {% load static %}
 
 {% block content %}
-    {% if courses %}
-    {% else %}
+    {% for student_course in request.user.student_courses.all %}
+        <p>{{ student_course.course.title }}: {{ student_course.active }}</p>
+    {% empty %}
         {% include "dashboard/components/no_courses.html" %}
-    {% endif %}
+    {% endfor %}
 {% endblock %}

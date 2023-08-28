@@ -3,11 +3,11 @@
 
 
 {% block content %}
-    <h1 class="h3">Subscription for {{ subscription.course.title }}</h1>
+    <h1 class="h3">Subscription for {{ subscription.course.title }} {{ subscription.payment_method }}</h1>
 
     <div class="row justify-content-center">
         <div class="col-8">
-            <form action="{% url 'subscriptions:pay-subscription' subscription.id %}" method="POST"></form>
+            <form action="{% url 'subscription:pay-subscription' subscription.id %}" method="POST"></form>
                 {% if subscription.payment_method == "mpesa" %}
                     <!-- Mpesa implementation here -->
                     <div class="text-center">

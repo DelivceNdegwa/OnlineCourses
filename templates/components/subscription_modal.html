@@ -34,41 +34,46 @@
                             <div class="col-12">
                                 <p><b>Payment method</b></p>
                             </div>
-                            <div class="col-6">
-                                <!-- MPESA -->
+
+                            <div class="col-12 payment-group">
                                 <div class="row">
-                                    <div class="col-12">
-                                        <a href="#" class="mt-2">
-                                            <img
-                                            src="{% static 'images/mpesa-logo.png' %}"
-                                            class="mpesa-logo img-fluid"
-                                            height="50px"
-                                            alt="Mpesa Logo"
-                                        >
-                                        </a>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="payment-choice" id="mpesa-payment" value="mpesa">
-                                            <label class="form-check-label" for="mpesa-payment">
-                                              M-Pesa
-                                            </label>
+                                    <div class="col-6">
+                                        <!-- MPESA -->
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <a href="#" id="mpesa-logo-img" class="mt-2">
+                                                    <img
+                                                    src="{% static 'images/mpesa-logo.png' %}"
+                                                    class="mpesa-logo img-fluid"
+                                                    height="50px"
+                                                    alt="Mpesa Logo"
+                                                >
+                                                </a>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="payment-choice" id="mpesa-payment" value="mpesa">
+                                                    <label class="form-check-label" for="mpesa-payment">
+                                                      M-Pesa
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <!-- PAYPAL -->
-                                <div class="row">
-                                    <div class="col-12">
-                                        {% include "logos/paypal-logo.html" %}
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="payment-choice" id="paypal-payment" value="paypal">
-                                            <label class="form-check-label" for="paypal-payment">
-                                              Paypal
-                                            </label>
+                                    <div class="col-6">
+                                        <!-- PAYPAL -->
+                                        <div class="row">
+                                            <div class="col-12">
+                                                {% include "logos/paypal-logo.html" %}
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="ms-3 form-check">
+                                                    <input class="form-check-input" type="radio" name="payment-choice" id="paypal-payment" value="paypal">
+                                                    <label class="form-check-label" for="paypal-payment">
+                                                      Paypal
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -78,42 +83,45 @@
                             <div class="col-12">
                                 <p><b>Subscription type</b></p>
                             </div>
-                            <div class="col-12">
-                                <!-- One time -->
-                                <div class="form-check">
-                                    <input
-                                        class="form-check-input"
-                                        type="radio"
-                                        name="subscription-type"
-                                        id="onetime-subscription"
-                                        value="one_time"
-                                        data-price="{{ course.one_time_price }}"
-                                    >
-                                    <label class="form-check-label" for="onetime-subscription">
-                                      One time
-                                    </label>
+                            <div class="subscription-group">
+                                <div class="col-12">
+                                    <!-- One time -->
+                                    <div class="form-check">
+                                        <input
+                                            class="form-check-input"
+                                            type="radio"
+                                            name="subscription-type"
+                                            id="onetime-subscription"
+                                            value="one_time"
+                                            data-price="{{ course.one_time_price }}"
+                                        >
+                                        <label class="form-check-label" for="onetime-subscription">
+                                          One time
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <!-- Monthly -->
+                                    <div class="form-check">
+                                        <input
+                                            class="form-check-input"
+                                            type="radio"
+                                            name="subscription-type"
+                                            id="monthly-subscription"
+                                            value="monthly"
+                                            data-price="{{ course.monthly_price }}"
+                                        >
+                                        <label class="form-check-label" for="monthly-subscription">
+                                            Monthly
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <!-- Monthly -->
-                                <div class="form-check">
-                                    <input
-                                        class="form-check-input"
-                                        type="radio"
-                                        name="subscription-type"
-                                        id="monthly-subscription"
-                                        value="monthly"
-                                        data-price="{{ course.monthly_price }}"
-                                    >
-                                    <label class="form-check-label" for="monthly-subscription">
-                                        Monthly
-                                    </label>
-                                </div>
-                            </div>
+
                             <div class="col-12 mt-4">
                                 <p class="h4 d-flex justify-content-between mx-2">
-                                    <span>PRICE</span>
-                                    <span>KES: 5000</span>
+                                    <span id="subscription-tag" class="d-none">PRICE</span>
+                                    <span id="subscription-fee"></span>
                                 </p>
                             </div>
                             <div class="col-12 mt-2 mb-2">

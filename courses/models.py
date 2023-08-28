@@ -79,17 +79,23 @@ class Course(models.Model):
     instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE, null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="courses")
     description = models.TextField()
+    ready = models.BooleanField(default=False)
     number_of_students = models.IntegerField(default=0)
-    monthly_price = models.DecimalField(default=0, max_digits=10, decimal_places=2)
-    one_time_price = models.DecimalField(default=0, max_digits=10, decimal_places=2)
+    monthly_price = models.DecimalField(default=0, max_digits=10, decimal_places=1)
+    one_time_price = models.DecimalField(default=0, max_digits=10, decimal_places=1)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
+
+    class Meta:
+        ordering = ['-created_at']
 
     def __str__(self):
         return self.title
 
 
 class CourseStudent(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.PROTECT)
-    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name="course_students")
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name="student_courses")
     active = models.BooleanField(default=False)
 
     def __str__(self):

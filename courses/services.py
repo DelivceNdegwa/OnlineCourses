@@ -1,8 +1,17 @@
 from django.db import transaction
 
-from courses.models import SystemSettings, Category, Section, VideoDocument, Video, Document, Subscription
+from courses.models import (
+    SystemSettings,
+    Category,
+    Section,
+    VideoDocument,
+    Video,
+    Document,
+    Subscription,
+    CourseStudent
+)
 from courses import selectors, constants
-from base import exceptions
+from base import exceptions, services
 
 
 # Create System Setting
@@ -14,7 +23,7 @@ def create_system_setting(one_time_fee, monthly_fee) -> SystemSettings:
             )
     return setting
 
-
+#  CATEGORIES
 @transaction.atomic
 def create_category(name, image, short_description) -> Category:
     category = Category.objects.create(
@@ -31,7 +40,7 @@ def delete_category(category_id: int):
     category.delete()
     return category
 
-
+# SECTIONS
 @transaction.atomic
 def create_section(title, course_id):
     course = selectors.get_specific_course(course_id)
@@ -40,8 +49,8 @@ def create_section(title, course_id):
         "title": title
     }
 
-    section = selectors.get_course_sections(filter_params, ['course__id'])
-
+    # section = selectors.get_course_sections(filter_params, ['course__id'])
+    section = selectors.get_course_sections(course.id)
     if section:
         print(f"--DUPLICATE-- ID->{course.title}:ID={section.first().course.title}, {section.first().title}")
         return section[0]
@@ -108,6 +117,7 @@ def create_lesson_document(document):
     except Exception as e:
         raise exceptions.CustomException(f"Instance not created {e}")
 
+# SUBSCRIPTIONS
 @transaction.atomic
 def create_subscription(
     *,
@@ -137,3 +147,35 @@ def create_subscription(
             start_date=start_date
         )
     return subscription
+
+# STUDENT COURSES CourseStudent
+@transaction.atomic
+def add_student_course(
+    student_id: int,
+    course_id: int,
+    active = None
+) -> CourseStudent:
+    student = selectors.get_specific_user(student_id)
+    course = selectors.get_specific_course(course_id)
+
+    student_course = CourseStudent.objects.create(
+        student=student,
+        course=course,
+        active = active or False
+    )
+    return student_course
+
+
+@transaction.atomic
+def update_student_course(
+    student_course_id: int,
+    status: bool,
+) -> CourseStudent:
+
+    updated_student_course = services.model_update(
+        CourseStudent,
+        student_course_id,
+        status
+    )
+
+    return updated_student_course

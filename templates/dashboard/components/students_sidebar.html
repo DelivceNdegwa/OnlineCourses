@@ -2,8 +2,12 @@
 
 
 {% block content %}
+{% url 'customer:home' as home_url %}
+{% url 'customer:learning' as learning_url %}
+
+
     <li>
-        <a href="#" class="active">
+        <a href="{{ home_url }}" class="{% if request.path == home_url %}active{% endif %}">
             <box-icon 
                 name='menu-alt-right' 
                 size="lg"
@@ -13,7 +17,7 @@
         </a>
     </li>
     <li>
-        <a href="{% url 'customer:learning' %}">
+        <a href="{{ learning_url }}" class="{% if request.path == learning_url %}active{% endif %}">
             <box-icon 
                 name='menu-alt-right' 
                 size="lg"

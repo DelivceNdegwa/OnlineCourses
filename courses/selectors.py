@@ -67,8 +67,8 @@ def get_course_students(filter_params: Optional[dict]):
     return selectors.get_objects(CourseStudent, filter_params , allowed_fields)
 
 
-def get_courses_with_active_students():
-    return Course.objects.filter(coursestudent__active=True).annotate(num_active_students=Count('coursestudent__student'))
+# def get_courses_with_active_students():
+#     return Course.objects.filter(coursestudent__active=True).annotate(num_active_students=Count('coursestudent__student'))
 
 # Sections
 def get_sections(filter_params: Optional[dict]=None) -> Section:
@@ -143,8 +143,12 @@ def get_specific_user(user_id: int) -> User:
     except User.DoesNotExist as exc:
         raise exceptions.CustomException(exc)
 
-def get_all_subscriptions(filter_params: Optional[dict]=None, extra_fields: list=[]) -> Any:
-    allowed_fields = utils.get_model_field_names(VideoDocument, filter_params)
+def get_all_subscriptions(filter_params: Optional[dict]=None, extra_fields = None) -> Any:
+    allowed_fields = utils.get_model_field_names(Subscription, filter_params)
+
+    if extra_fields is not None and type(extra_fields) is list:
+        allowed_fields += extra_fields
+
     return selectors.get_objects(Video, filter_params, allowed_fields)
 
 def get_specific_subscription(subscription_id: int) -> Subscription:
@@ -153,3 +157,23 @@ def get_specific_subscription(subscription_id: int) -> Subscription:
         return subscription
     except Subscription.DoesNotExist as exc:
         raise exceptions.CustomException(exc)
+
+# STUDENT COURSES
+def get_student_courses(filter_params: Optional[dict] = None, extra_fields = None) -> Any:
+    allowed_fields = utils.get_model_field_names(CourseStudent, filter_params)
+
+    if extra_fields is not None and type(extra_fields) is list:
+        allowed_fields += extra_fields
+
+    return selectors.get_objects(CourseStudent, filter_params, allowed_fields)
+
+def get_specific_student_course(student_course_id: int) -> CourseStudent:
+    try:
+        student_course_details = selectors.get_specific_object(CourseStudent, student_course_id)
+        return student_course_details
+    except Exception as exc:
+        raise exceptions.CustomException(exc)
+
+
+def get_courses_with_active_students():
+    return get_student_courses({"active": True}).count()

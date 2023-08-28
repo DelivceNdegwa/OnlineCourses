@@ -59,3 +59,25 @@
     </div>
     {% include "components/subscription_modal.html" %}
 {% endblock %}
+{% block js %}
+    <script>
+        $(document).ready(function() {
+            $("#paypal-logo-img").on("click", function(){
+                $("input[name='payment-choice'][value='paypal']").prop("checked", true);
+            });
+            $("#mpesa-logo-img").on("click", function(){
+                $("input[name='payment-choice'][value='mpesa']").prop("checked", true);
+            });
+            $(".payment-group input[type='radio']").change(function() {
+                let selectedMode = $("input[name='payment-choice']:checked").val();
+            });
+
+            $(".subscription-group input[type='radio']").change(function() {
+                let selectedSubscription = $("input[name='subscription-type']:checked").val();
+                let subscriptionFee =  $("input[name='subscription-type']:checked").data("price")
+                $("#subscription-fee").text(`KES: ${subscriptionFee}`);
+                $("#subscription-tag").removeClass("d-none").addClass("d-block");
+            });
+        });
+    </script>
+{% endblock %}

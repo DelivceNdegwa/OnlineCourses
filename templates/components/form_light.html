@@ -8,11 +8,26 @@
 {% endfor %}
 
 {% for field in form.visible_fields %}
-      <div class="form-group mt-3">
-        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-        {{ field|add_class:'form-control' }}
-        {% for error in field.errors %}
-          <small class="text-danger">{{ error }}</small>
-        {% endfor %}
-      </div>
+        {% if field.field.widget.input_type != 'checkbox' %}
+          <div class="form-group mt-3">
+              <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {{ field|add_class:'form-control' }}
+              {% for error in field.errors %}
+                <small class="text-danger">{{ error }}</small>
+              {% endfor %}
+          </div>
+          {% comment %}
+            {% else %}
+              <div class="form-check">
+                {{ field|add_class:'form-check-input' }}
+                <label class="form-check-label" for="{{ field.id_for_label }}">
+                  {{ field.label }}
+                </label>
+                {% for error in field.errors %}
+                  <small class="text-danger d-block">{{ error }}</small>
+                {% endfor %}
+              </div>
+          {% endcomment %}
+        {% endif %}
+      
 {% endfor %}

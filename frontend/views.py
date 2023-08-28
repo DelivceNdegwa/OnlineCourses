@@ -4,7 +4,7 @@ from courses import selectors
 def index(request):
     
     categories = selectors.get_categories()
-    courses = selectors.get_courses()
+    courses = selectors.get_courses({'ready': True})
     context = {
         "categories": categories,
         "courses": courses

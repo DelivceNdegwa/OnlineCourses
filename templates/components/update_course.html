@@ -8,6 +8,7 @@
     {% endfor %}
 
     {% for field in course_form.visible_fields %}
+    {% if field.field.widget.input_type != 'checkbox' %}
         <div class="form-group mt-3">
             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
             {{ field|add_class:'form-control' }}
@@ -15,6 +16,17 @@
             <small class="text-danger">{{ error }}</small>
             {% endfor %}
         </div>
+        {% else %}
+        <div class="form-check mt-3">
+            {{ field|add_class:'form-check-input' }}
+            <label class="form-check-label" for="{{ field.id_for_label }}">
+            {{ field.label }}
+            </label>
+            {% for error in field.errors %}
+            <small class="text-danger d-block">{{ error }}</small>
+            {% endfor %}
+        </div>
+        {% endif %}
     {% endfor %}
     <button class="btn btn-custom-secondary mt-3 w-100">Update course details</button>
 </form>
