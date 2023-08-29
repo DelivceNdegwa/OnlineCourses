@@ -125,6 +125,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# WEBPUSH_SETTINGS = {
+#     "VAPID_PUBLIC_KEY": os.getenv("VAPID_PUBLIC_KEY"),
+#     "VAPID_PRIVATE_KEY": os.getenv("VAPID_PRIVATE_KEY"),
+#     "VAPID_ADMIN_EMAIL": os.getenv("VAPID_ADMIN_EMAIL")
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -160,8 +165,8 @@ FFMPEG_BINARY = '/usr/bin/ffmpeg'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-EMAIL_HOST_USER = 'bc2f7665cafe61'
-EMAIL_HOST_PASSWORD = 'c2c984449a3c79'
-EMAIL_PORT = '2525'
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = os.getenv("EMAIL_POST")
 
