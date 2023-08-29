@@ -17,11 +17,11 @@ from courses.routing import websocket_urlpatterns
 from courses.middlewares import WebSocketAuthMiddleware
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'online_courses.settings')
-http_config = {
-    "http": get_asgi_application(),
-}
-asgi_config = ProtocolTypeRouter({
-    "http": get_asgi_application(),
+
+asgi_application = get_asgi_application()
+
+application = ProtocolTypeRouter({
+    "http": asgi_application,
     "websocket": AuthMiddlewareStack(
         WebSocketAuthMiddleware(
             URLRouter(
@@ -30,4 +30,3 @@ asgi_config = ProtocolTypeRouter({
         )
     ),
 })
-application = ProtocolTypeRouter(asgi_config)

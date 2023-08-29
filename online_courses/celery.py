@@ -14,7 +14,7 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 
 app.conf.enable_utc = False
 
-app.conf.update(timezone = 'EAT')
+app.conf.update(timezone = 'Africa/Nairobi')
 
 # Auto-discover tasks in all installed apps.
 app.autodiscover_tasks()

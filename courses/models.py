@@ -134,7 +134,7 @@ class Video(models.Model):
         return self.dash_manifest.url
     
     def __str__(self):
-        return str(self.video_file)
+        return f"{self.id}: {self.video_file}"
     
     
 

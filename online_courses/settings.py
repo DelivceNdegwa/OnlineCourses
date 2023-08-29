@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'staff',
     
     'widget_tweaks',
+    
+    'channels',
     'django_celery_results',
 ]
 
@@ -66,7 +68,7 @@ CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
 CELERY_ACCEPT_CONTENT = {'application/json'}
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'EAT'
+CELERY_TIMEZONE = 'Africa/Nairobi'
 CELERY_RESULT_BACKEND = 'django-db'
 
 TEMPLATES = [
@@ -87,7 +89,7 @@ TEMPLATES = [
     },
 ]
 
-ASGI_APPLICATION = 'online_courses.asgi.application'
+
 WSGI_APPLICATION = 'online_courses.wsgi.application'
 
 # Database
@@ -104,6 +106,17 @@ DATABASES = {
         # 'PORT': '5432'
     }
 }
+
+ASGI_APPLICATION = 'online_courses.asgi.application'
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
+
 
 TEST_DATABASE_PREFIX = 'test_'
 
