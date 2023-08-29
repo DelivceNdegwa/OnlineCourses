@@ -25,6 +25,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>    
+
+    {% if request.user and request.user.is_superuser %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/autobahn/18.5.1/autobahn.min.js"></script>
+        <script src="{% static 'js/video_processing_notification.js' %}"></script>
+    {% endif %}
     {% block js %}{% endblock %}
 </body>
 </html>
