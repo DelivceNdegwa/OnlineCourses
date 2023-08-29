@@ -111,6 +111,13 @@ class Section(models.Model):
 
 
 class Video(models.Model):
+    PROCESSING_STATES = (
+        ('pending', 'Pending'),
+        ('processing', 'Processing'),
+        ('complete', 'Complete'),
+    )
+
+    processing_state = models.CharField(max_length=20, choices=PROCESSING_STATES, default='pending')
     thumbnail = models.ImageField(upload_to='thumbnails/', null=True)
     video_file = models.FileField(upload_to='videos/')
     hls_manifest = models.FileField(upload_to='hls/', blank=True, null=True)
