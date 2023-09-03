@@ -151,6 +151,7 @@ class VideoDocument(models.Model):
     video = models.ForeignKey(Video, on_delete=models.CASCADE, null=True, blank=True)
     document = models.ForeignKey(Document, on_delete=models.CASCADE, null=True, blank=True)
     position = models.IntegerField(null=True, blank=True)
+    is_ready = models.BooleanField(default=False)
     
     def __str__(self):
         return f"{self.position}:{self.title}:{self.id}"

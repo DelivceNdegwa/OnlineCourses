@@ -1,5 +1,6 @@
 {% load static %}
 {% load custom_tags %}
+
 <style>
   .dropdown-toggle::after {
     content: None !important;
@@ -31,25 +32,26 @@
             </button>
         </div>
     </div>
-    <div class="w-100 border-0 mt-2 mx-0 collapse" id="section-{{ section.id }}">
+    <div class="w-100 border-0 mt-2 mx-0" id="section-{{ section.id }}">
         <ul class="card card-body dropdown-card">
-            {% for lesson in section.lessons.all %}
+            {% for sec_lesson in section.lessons.all %}
                 <li class="my-1">
                     <div class="row">
                         <div class="col-10">
-                            <span>{{ forloop.counter|int_to_roman }}. 
-                                <a 
-                                    href="{% url 'course-lesson-session' course_id=course.id section_id=section.id lesson_id=lesson.id %}"
-                                    class="text-decoration-none text-dark"
+                            <span class="{% if sec_lesson.id == lesson.id %}text-custom-secondary{% else %}text-dark{% endif %}">{{ forloop.counter|int_to_roman }}. 
+                                <a
+                                    href="{% url 'customer:course-session-specific' course_id=course.id lesson_id=sec_lesson.id %}"
+                                    id="lesson-{{ sec_lesson.id }}"
+                                    class="text-decoration-none {% if sec_lesson.id == lesson.id %}text-custom-secondary{% else %}text-dark{% endif %}"
                                 >
-                                    {{ lesson.title }}
+                                    {{ sec_lesson.title }}
                                 </a>
-                        </span>
+                            </span>
                         </div>
-                        <div class="col-2 text-end">
-                            {% if lesson.video %}
+                        <div class="col-2 text-end {% if sec_lesson.id == lesson.id %}text-custom-secondary{% else %}text-dark{% endif %}">
+                            {% if sec_lesson.video %}
                                 <i class="fa fa-video-camera"></i>
-                            {% elif lesson.document %}
+                            {% elif sec_lesson.document %}
                                 <i class="fa fa-book"></i>
                             {% endif %}
                         </div>

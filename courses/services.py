@@ -59,6 +59,7 @@ def create_section(title, course_id):
         title=title,
         course=course
     )
+
     return section
 
 

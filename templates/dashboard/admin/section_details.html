@@ -52,12 +52,16 @@
               <th scope="row">{{ forloop.counter }}</th>
               <td>{{ lesson.title }}</td>
               <td class="text-end">
-                <a 
-                href="{% url 'staff:admin_course_section_lesson_details' course_id=lesson.section.course.id section_id=lesson.section.id lesson_id=lesson.id %}" 
-                class="btn border-0 me-1"
-                >
-                  <i class="fa fa-eye"></i>
-                </a>
+                {% if lesson.is_ready %}
+                  <a 
+                    href="{% url 'staff:admin_course_section_lesson_details' course_id=lesson.section.course.id section_id=lesson.section.id lesson_id=lesson.id %}" 
+                    class="btn border-0 me-1"
+                  >
+                    <i class="fa fa-eye"></i>
+                  </a>
+                {% else %}
+                  <span class="badge bg-warning"><i class="fa fa-spinner fa-spin me-2"></i>ongoing processing</span>
+                {% endif %}
               </td>
             </tr>
           {% endfor %}

@@ -35,9 +35,13 @@
                                     {% for course in page_obj %}
                                         <tr>
                                             <th scope="row">{{ forloop.counter }}</th>
-                                            <td>{{ course.title }}</td>
+                                            <td>{{ course.title }}
+                                                {% if not course.ready %}
+                                                    <span class="badge bg-warning mx-1">not ready</span>
+                                                {% endif %}
+                                            </td>
                                             <td class="text-end">
-                                                <a href="{% url 'staff:course_details' course.id %}" class="btn border-0 me-1">
+                                                <a href="{% url 'staff:course_details' course.id %}" class="btn border-0 me-1" title="View course">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
                                             </td>
@@ -69,5 +73,6 @@
             </div>
         </div>
         {% include "components/creation_modal_course.html" %}
+        
     </div>  
 {% endblock %}

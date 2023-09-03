@@ -14,8 +14,9 @@
                 {% endif %}
             </small>
             <div class="text-end">
+                <!--  section_id=1 lesson_id=1 -->
                 <a 
-                    href="{% url 'customer:course-lesson-session' course_id=student_course.course.id section_id=1 lesson_id=1 %}" 
+                    href="{% url 'customer:course-session' course_id=student_course.course.id %}" 
                     class="btn btn-custom-secondary"
                 >
                     Go to learning

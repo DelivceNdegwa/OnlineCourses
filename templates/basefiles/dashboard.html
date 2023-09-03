@@ -51,6 +51,58 @@
         <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
         <script src="{% static 'js/owl.carousel.min.js' %}"></script>
         <script>
+            function initializeVideoPlayer(videoContainerID, lessonSourceManifest, lessonThumbnail=null) {
+                let videoContainer = $(videoContainerID);
+        
+                let existingVideo = videoContainer.find("video");
+                if (existingVideo.length > 0) {
+                    existingVideo.remove();
+                }
+        
+                let newVideoElement = document.createElement("video");
+                newVideoElement.id = "video-player";
+                newVideoElement.poster = lessonThumbnail;
+                newVideoElement.className = "shadow-lg rounded";
+                newVideoElement.controls = true;
+
+                let sourceElement = document.createElement("source");
+                sourceElement.src = lessonSourceManifest;
+                sourceElement.type = "application/dash+xml";
+
+                newVideoElement.appendChild(sourceElement);
+
+                videoContainer.append(newVideoElement);
+
+                let player = dashjs.MediaPlayer().create();
+                player.initialize(newVideoElement, lessonSourceManifest, true);
+            }
+
+          function openLesson(event, lessonId){
+            let lessonLinkElement = $(event.currentTarget);
+            let lessonUrl = lessonLinkElement.data('url');
+            let csrfToken = lessonLinkElement.data('csrf');
+
+            let formData = {
+              "csrfmiddlewaretoken": csrfToken,
+              "lesson-id": lessonId,
+            }
+
+            $.ajax({
+                method: "POST",
+                url: lessonUrl,
+                data: formData,
+                dataType: 'json',
+                /*success: function(response){
+                  console.log(`MANIFEST=${response.videomanifest}, URL=${response.thumbnail}`);
+                  initializeVideoPlayer("video-container", response.videomanifest, response.thumbnail)
+                },*/
+                error: function(error){
+                  alert(`Something went wrong`);
+                  console.log(error.response)
+                }
+
+            });
+          }
             $(document).ready(function () {
               function toggleSections() {
                 if ($("#videoRadio").prop("checked")) {
@@ -114,7 +166,11 @@
                           `
                         
                         );
+                        $('#btn-upload-lesson').prop('disabled', false);
                       }, 1000);
+                      setTimeout(function(){
+                          window.location.reload()
+                      }, 1000);z
                     },
                     error: function(error) {
                       console.log('Error submitting form')
