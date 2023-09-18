@@ -190,4 +190,4 @@ def get_specific_student_course(student_course_id: int) -> CourseStudent:
 
 
 def get_courses_with_active_students():
-    return get_student_courses({"active": True}).count()
+    return get_student_courses({"active": True}).distinct().count()

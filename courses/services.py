@@ -50,11 +50,11 @@ def create_section(title, course_id):
     }
 
     # section = selectors.get_course_sections(filter_params, ['course__id'])
-    section = selectors.get_course_sections(course.id)
-    if section:
-        print(f"--DUPLICATE-- ID->{course.title}:ID={section.first().course.title}, {section.first().title}")
-        return section[0]
-    
+    sections = selectors.get_course_sections(course.id).filter(title__iexact=title)
+    if sections:
+        print(f"--DUPLICATE-- ID->{course.title}:ID={sections.first().course.title}, {sections.first().title}")
+        return sections.first()
+
     section = Section.objects.create(
         title=title,
         course=course

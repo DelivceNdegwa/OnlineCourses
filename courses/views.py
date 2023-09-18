@@ -14,7 +14,7 @@ from staff import forms
 def video_stream(request, video_id):
     # video = get_object_or_404(Video, pk=video_id)
     # dash_manifest_url = video.generate_dash()
-    video = selectors.get_specific_video({'id': 6})
+    video = selectors.get_specific_video({'id': video_id})
     dash_manifest_url = video.dash_manifest
 
     return render(request, 'courses/video.html', {'dash_manifest_url': dash_manifest_url})
